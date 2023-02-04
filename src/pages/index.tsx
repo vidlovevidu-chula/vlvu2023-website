@@ -1,5 +1,6 @@
 import { DescribeRoute } from "@components/Meta/DescribeRoute"
 import type { NextPage } from "next"
+import { getAllEstamps } from "@lib/estamp"
 
 const Home: NextPage = () => {
   return (

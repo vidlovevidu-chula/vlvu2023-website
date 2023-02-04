@@ -1,138 +1,136 @@
 import { FC, useEffect, useState } from "react"
-import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, User as FirebaseUser} from "firebase/auth"
+import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, User as FirebaseUser } from "firebase/auth"
 import firebaseApp from "@lib/firebase"
 import { createUser, getUser, User } from "@lib/user"
 
-const UserCard: FC<{ user: User; }> = ({ user }) => {
-    const keys = Object.keys(user) as ((keyof User)[]);
+const UserCard: FC<{ user: User }> = ({ user }) => {
+  const keys = Object.keys(user) as (keyof User)[]
 
-    const tableContent = keys.map((key) => {
-        return (
-            <tr key={key}>
-                <td>{ key }</td>
-                <td>{ user[key as keyof User].toString() }</td>
-            </tr>
-        );
-    });
-    
-    return ( 
-        <div>
-            <table>
-                <tbody>
-                    { tableContent }
-                </tbody>
-            </table>
-        </div>
-    );
+  const tableContent = keys.map((key) => {
+    return (
+      <tr key={key}>
+        <td>{key}</td>
+        <td>{user[key as keyof User].toString()}</td>
+      </tr>
+    )
+  })
+
+  return (
+    <div>
+      <table>
+        <tbody>{tableContent}</tbody>
+      </table>
+    </div>
+  )
 }
 export function ExampleLogin() {
-    const [credential, setCredential] = useState<FirebaseUser | null>(null);
+  const [credential, setCredential] = useState<FirebaseUser | null>(null)
 
-    const auth = getAuth(firebaseApp);
+  const auth = getAuth(firebaseApp)
 
-    const [userData, setUserData] = useState<User | null>(null);
+  const [userData, setUserData] = useState<User | null>(null)
 
-    useEffect(() => {
-        const unsubsrcibe = onAuthStateChanged(auth, (credential) => {
-            if(credential) {
-                handleFirebaseUser(credential)
-            }
-        });
+  useEffect(() => {
+    const unsubsrcibe = onAuthStateChanged(auth, (credential) => {
+      if (credential) {
+        handleFirebaseUser(credential)
+      }
+    })
 
-        return () => unsubsrcibe();
-    }, []);
+    return () => unsubsrcibe()
+  }, [])
 
-    const handleFirebaseUser = async (credential: FirebaseUser) => {
-        setCredential(credential);
+  const handleFirebaseUser = async (credential: FirebaseUser) => {
+    setCredential(credential)
 
-        if(!credential) {
-            return;
-        }
-
-        getUser(credential).then((user) => {
-            setUserData(user);
-        })
-    };
-  
-    const getCredential = async () => {
-        const provider = new GoogleAuthProvider();
-
-        const credential = await signInWithPopup(auth, provider);
-
-        return credential.user;
+    if (!credential) {
+      return
     }
 
-    const signin = async () => {
-        if (!credential) {
-            setCredential(await getCredential());
+    getUser(credential).then((user) => {
+      setUserData(user)
+    })
+  }
 
-            if(!credential) {
-                return;
-            }
-        }
+  const getCredential = async () => {
+    const provider = new GoogleAuthProvider()
 
-        // save credential and then
-        // get user info here
+    const credential = await signInWithPopup(auth, provider)
 
-        await createUser(credential, {
-            faculty: "Engineering",
-            firstname: "John",
-            lastname: "Doe",
-            nickname: "Jo",
-            status: "student",
-            year: 1,
-        })
+    return credential.user
+  }
+
+  const signin = async () => {
+    if (!credential) {
+      setCredential(await getCredential())
+
+      if (!credential) {
+        return
+      }
     }
 
-    // TODO: Please fix this
-    const divStyle = {
-        display: "flex",
-        margin: "5px",
-        justifyContent: "center",
-    }
+    // save credential and then
+    // get user info here
 
-    const buttonStyle = {
-        margin: "5px",
-        backgroundColor: "lightgreen",
-        padding: "5px 10px",
-    }
+    await createUser(credential, {
+      faculty: "Engineering",
+      firstname: "John",
+      lastname: "Doe",
+      nickname: "Jo",
+      status: "student",
+      year: 1,
+    })
+  }
 
-    const login = async () => {
-        const credential = await getCredential();
+  // TODO: Please fix this
+  const divStyle = {
+    display: "flex",
+    margin: "5px",
+    justifyContent: "center",
+  }
 
-        setCredential(credential);
+  const buttonStyle = {
+    margin: "5px",
+    backgroundColor: "lightgreen",
+    padding: "5px 10px",
+  }
 
-        await handleFirebaseUser(credential);
-    }
+  const login = async () => {
+    const credential = await getCredential()
 
-    const logout = async () => {
-        await auth.signOut();
+    setCredential(credential)
 
-        setCredential(null);
+    await handleFirebaseUser(credential)
+  }
 
-        setUserData(null);
-    }
+  const logout = async () => {
+    await auth.signOut()
 
-    let content;
-    
-    if (userData) {
-        content = (<div>
-            <UserCard user={userData} />
-            <button onClick={logout} style={buttonStyle}>
-                Logout
-            </button>
-        </div>);
-    } else {
-        content = (<div>
-            <button onClick={signin} style={buttonStyle}>
-                Sign in with google
-            </button>
-        </div>);
-    }
+    setCredential(null)
 
-    return (
-        <div style={divStyle}>
-            { content }
-        </div>
-    );
+    setUserData(null)
+  }
+
+  let content
+
+  if (userData) {
+    content = (
+      <div>
+        <UserCard user={userData} />
+        <button onClick={logout} style={buttonStyle}>
+          Logout
+        </button>
+      </div>
+    )
+  } else {
+    content = (
+      <div>
+        <button onClick={signin} style={buttonStyle}>
+          Sign in with google
+        </button>
+      </div>
+    )
+  }
+
+  return <div style={divStyle}>{content}</div>
 }
