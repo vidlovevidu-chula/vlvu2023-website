@@ -1,4 +1,5 @@
 import clsx from "clsx"
+import { ReactNode } from "react"
 
 export function Button({
   type,
@@ -7,7 +8,7 @@ export function Button({
   className,
 }: {
   type: "primary" | "secondary"
-  children: string
+  children: ReactNode
   onClick?: () => void
   className?: string
 }) {
