@@ -1,21 +1,21 @@
+import { Button } from "@components/common/Button"
 import { DescribeRoute } from "@components/Meta/DescribeRoute"
-import type { NextPage } from "next"
 
-const Home: NextPage = () => {
+export default function Home() {
   return (
-    <DescribeRoute title="Next.js boilerplate" description="by betich">
-      <main>
-        <h1>Next.js App</h1>
-        <p className="mt-2 mb-4 text-sm font-bold text-white">
-          Generated using{" "}
-          <a href="https://github.com/betich/next-boilerplate" target="_blank" rel="noreferrer">
-            {"betich's"}
-          </a>{" "}
-          Next.js boilerplate template
-        </p>
-      </main>
+    <DescribeRoute title="Vid Love Vid U" description="Vid Love Vid U">
+      <div className="bg-vlvu-pink-100 font-display min-h-screen w-full">
+        <main className="text-vlvu-pink-500 mx-auto max-w-lg">
+          <div className="flex flex-col items-center justify-center h-screen gap-6">
+            <div>
+              <h1 className="font-semibold text-lg text-center">Welcome!</h1>
+              <p className="text-center">มาตามหาดอกไม้สำหรับคุณกัน</p>
+            </div>
+
+            <Button type="primary">Ready ?</Button>
+          </div>
+        </main>
+      </div>
     </DescribeRoute>
   )
 }
-
-export default Home

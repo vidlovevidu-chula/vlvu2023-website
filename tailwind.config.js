@@ -7,6 +7,14 @@ module.exports = {
   content: ["./src/**/*.{ts,tsx}"],
   theme: {
     extend: {
+      colors: {
+        "vlvu-pink": {
+          100: "#FFF2F4",
+          400: "#FAB9D1",
+          500: "#D05783",
+          600: "#983055",
+        },
+      },
       typography: (theme) => ({
         DEFAULT: {
           css: {
