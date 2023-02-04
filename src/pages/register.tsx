@@ -11,7 +11,7 @@ export default function Register() {
                     </div>
                     <div className="flex flex-col gap-3">
                         <Button type="primary" className="bg-white flex gap-6 px-3 items-center pr-8 content-start">
-                            <Image src="/assets/google-logo.svg" alt="email icon" height="32px" width="32px" />
+                            <Image src="/assets/google-logo.svg" alt="google icon" height="32px" width="32px" />
                             <span className="grow text-start text-gray-500 font-semibold">Sign in with Google</span>
                         </Button>
                         <Button type="primary" className="bg-white flex gap-6 px-3 items-center pr-8 content-start">
