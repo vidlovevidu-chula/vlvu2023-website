@@ -1,4 +1,3 @@
 export interface Estamp {
-  name: string;
+  name: string
 }
-

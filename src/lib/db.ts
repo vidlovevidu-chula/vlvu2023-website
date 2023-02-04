@@ -7,6 +7,10 @@ export const getUserRef = (uid: string) => {
   return doc(db, "users", uid)
 }
 
+export const getEstampRef = (estampId: string) => {
+  return doc(db, "estamps", estampId)
+}
+
 // export const updateUser = (uid: string, data: DocumentData): Promise<void> => {
 //   const userRef = getUserRef(uid)
 
