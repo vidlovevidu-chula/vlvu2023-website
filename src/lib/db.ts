@@ -3,9 +3,9 @@ import firebaseApp from "./firebase"
 
 const db = getFirestore(firebaseApp)
 
-// export const getUserRef = (uid: string) => {
-//   return doc(db, "users", uid)
-// }
+export const getUserRef = (uid: string) => {
+  return doc(db, "users", uid)
+}
 
 // export const updateUser = (uid: string, data: DocumentData): Promise<void> => {
 //   const userRef = getUserRef(uid)
@@ -13,19 +13,19 @@ const db = getFirestore(firebaseApp)
 //   return updateDoc(userRef, data)
 // }
 
-// export const createUser = (uid: string, data: DocumentData): Promise<void> => {
-//   const userRef = getUserRef(uid)
+export const createUser = (uid: string, data: DocumentData): Promise<void> => {
+  const userRef = getUserRef(uid)
 
-//   return setDoc(userRef, data, { merge: true })
-// }
+  return setDoc(userRef, data, { merge: true })
+}
 
-// export const getCurrentUserData = async (uid: string): Promise<null | DocumentData> => {
-//   const userRef = getUserRef(uid)
-//   const doc = await getDoc(userRef)
+export const getCurrentUserData = async (uid: string): Promise<null | DocumentData> => {
+  const userRef = getUserRef(uid)
+  const doc = await getDoc(userRef)
 
-//   if (doc.exists()) {
-//     return doc.data()
-//   } else {
-//     return null
-//   }
-// }
+  if (doc.exists()) {
+    return doc.data()
+  } else {
+    return null
+  }
+}
