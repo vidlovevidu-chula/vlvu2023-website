@@ -2,14 +2,23 @@ import { Button } from "@components/common/Button"
 import firebaseApp from "@lib/firebase"
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth"
 import Image from "next/image"
+import { useRouter } from "next/router"
 
 export default function Register() {
   const auth = getAuth(firebaseApp)
 
+  const router = useRouter()
+
   const googleLogin = async () => {
     const provider = new GoogleAuthProvider()
 
-    await signInWithPopup(auth, provider)
+    try {
+      await signInWithPopup(auth, provider)
+
+      router.push("/registerform")
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   const emailLogin = async () => {}

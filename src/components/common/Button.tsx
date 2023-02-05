@@ -19,7 +19,7 @@ export function Button({
         "py-2 px-14 rounded-2xl transition-colors duration-200",
         type === "primary" && "bg-vlvu-pink-400 text-vlvu-pink-500 hover:bg-vlvu-pink-500 hover:text-white",
         type === "secondary" && "bg-vlvu-pink-500 text-white hover:bg-vlvu-pink-600",
-        className
+        className,
       )}
     >
       {children}

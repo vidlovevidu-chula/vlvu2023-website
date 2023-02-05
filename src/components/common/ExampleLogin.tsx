@@ -74,8 +74,7 @@ export function ExampleLogin() {
 
     await createUser(credential, {
       faculty: "Engineering",
-      firstname: "John",
-      lastname: "Doe",
+      name: "John Doe",
       nickname: "Jo",
       status: "student",
       year: 1,

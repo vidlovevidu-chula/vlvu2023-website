@@ -5,8 +5,7 @@ import { DocumentData } from "firebase/firestore"
 
 export interface UserCreateBody {
   faculty: string
-  firstname: string
-  lastname: string
+  name: string
   nickname: string
   status: "student" | "alumni" | "participant"
   year: number
@@ -16,8 +15,7 @@ export interface User {
   email: string
   estamps: Estamp[]
   faculty: string
-  firstname: string
-  lastname: string
+  name: string
   nickname: string
   status: string
   year: number

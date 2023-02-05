@@ -4,6 +4,7 @@
     "paths": {
       "@styles/*": ["src/styles/*"],
       "@components/*": ["src/components/*"],
+      "@data/*": ["src/data/*"],
       "@pages/*": ["src/pages/*"],
       "@helpers/*": ["src/helpers/*"],
       "@types": ["src/@types/index.ts"],
