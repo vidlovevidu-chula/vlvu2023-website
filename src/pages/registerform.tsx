@@ -2,65 +2,13 @@ import firebaseApp from "@lib/firebase"
 import { getAuth, onAuthStateChanged } from "firebase/auth"
 import Image from "next/image"
 // import { useRouter } from "next/router"
-import { Formik, Form, Field, ErrorMessage } from "formik"
+import { Formik, Form } from "formik"
 import faculties from "@data/faculties"
-import clsx from "clsx"
 import { useEffect, useState } from "react"
 import { User as FirebaseUser } from "firebase/auth"
 import { createUser } from "@lib/user"
-
-const TextField = ({
-  fieldName,
-  fieldLabel,
-  className,
-}: {
-  fieldName: string
-  fieldLabel: string
-  className?: string
-}) => {
-  return (
-    <div>
-      <h2>{fieldLabel}</h2>
-      <Field type="text" name={fieldName} className={clsx("rounded-2xl p-2", className)} />
-      <ErrorMessage name={fieldName} component="div" />
-    </div>
-  )
-}
-
-const SelectField = ({
-  fieldName,
-  fieldLabel,
-  options,
-  placeholder,
-  className,
-}: {
-  fieldName: string
-  fieldLabel: string
-  options: [string, string][]
-  placeholder?: string
-  className?: string
-}) => {
-  return (
-    <div>
-      <h2>{fieldLabel}</h2>
-      <Field as="select" name={fieldName} className={clsx("rounded-2xl p-2", className)}>
-        {placeholder && (
-          <option value="" selected disabled hidden>
-            {placeholder}
-          </option>
-        )}
-        {options.map(([label, value]) => {
-          return (
-            <option value={value} key={value}>
-              {label}
-            </option>
-          )
-        })}
-      </Field>
-      <ErrorMessage name={fieldName} component="div" />
-    </div>
-  )
-}
+import { TextField } from "@components/common/TextField"
+import { SelectField } from "@components/common/SelectField"
 
 export default function Register() {
   const auth = getAuth(firebaseApp)
