@@ -21,7 +21,9 @@ export default function Register() {
     }
   }
 
-  const emailLogin = async () => {}
+  const emailLogin = () => {
+    router.push("/emailregister")
+  }
 
   return (
     <div className="bg-vlvu-pink-100 font-display min-h-screen w-full">
