@@ -1,10 +1,13 @@
 import firebaseApp from "@lib/firebase"
-import { getAuth } from "firebase/auth"
+import { getAuth, onAuthStateChanged } from "firebase/auth"
 import Image from "next/image"
-import { useRouter } from "next/router"
+// import { useRouter } from "next/router"
 import { Formik, Form, Field, ErrorMessage } from "formik"
 import faculties from "@data/faculties"
 import clsx from "clsx"
+import { useEffect, useState } from "react"
+import { User as FirebaseUser } from "firebase/auth"
+import { createUser } from "@lib/user"
 
 const TextField = ({
   fieldName,
@@ -62,7 +65,21 @@ const SelectField = ({
 export default function Register() {
   const auth = getAuth(firebaseApp)
 
-  const router = useRouter()
+  const [cred, setCred] = useState<FirebaseUser | null>(null)
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (newCredential) => {
+      if (cred) {
+        return
+      }
+      if (newCredential) {
+        setCred(newCredential)
+        unsubscribe()
+      }
+    })
+  }, [])
+
+  // const router = useRouter()
 
   const handleSubmit = async ({
     nickname,
@@ -80,6 +97,19 @@ export default function Register() {
     year: string
   }) => {
     console.log(nickname, name, status, faculty, studentId, year)
+
+    if (!cred) {
+      console.error("Missing credential")
+      return
+    }
+
+    await createUser(cred, {
+      faculty,
+      name,
+      nickname,
+      status: status as "student" | "alumni" | "participant",
+      year: +year,
+    })
   }
 
   return (
@@ -118,12 +148,14 @@ export default function Register() {
 
               return errors
             }}
-            onSubmit={(values, { setSubmitting }) => {
+            onSubmit={async (values, { setSubmitting }) => {
               setSubmitting(true)
 
               console.log(values)
 
-              handleSubmit(values)
+              await handleSubmit(values)
+
+              setSubmitting(false)
             }}
           >
             {({ isSubmitting }) => (
@@ -149,7 +181,7 @@ export default function Register() {
                   placeholder=" "
                 />
                 <TextField fieldName="year" fieldLabel="ชั้นปี" className="w-1/5" />
-                <button type="submit" disabled={isSubmitting} className="w-1/6 self-end">
+                <button type="submit" disabled={isSubmitting || !cred} className="w-1/6 self-end">
                   ถัดไป
                 </button>
               </Form>
