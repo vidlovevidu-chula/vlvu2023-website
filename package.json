@@ -13,6 +13,7 @@
     "fix:prettier": "yarn lint:prettier --write"
   },
   "dependencies": {
+    "@heroicons/react": "^2.0.14",
     "clsx": "^1.2.1",
     "firebase": "^9.16.0",
     "formik": "^2.2.9",
