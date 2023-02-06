@@ -1,11 +1,9 @@
 import { Button } from "@components/common/Button"
 import { useAuth } from "@lib/auth"
 import GoogleIcon from "@vectors/icons/google"
-import { useRouter } from "next/router"
 
 export default function Register() {
   const auth = useAuth()
-  const router = useRouter()
 
   return (
     <div className="bg-vlvu-pink-100 font-display min-h-screen w-full">
@@ -17,7 +15,9 @@ export default function Register() {
           <div className="flex flex-col gap-3">
             <Button
               type="primary"
-              onClick={() => auth?.signinWithGoogle}
+              onClick={() => {
+                auth?.signinWithGoogle("/registerform")
+              }}
               className="bg-white flex gap-6 px-8 items-center content-start"
             >
               <GoogleIcon height="32" width="32" className="" />

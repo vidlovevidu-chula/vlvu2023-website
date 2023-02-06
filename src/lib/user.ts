@@ -8,17 +8,13 @@ export interface UserCreateBody {
   name: string
   nickname: string
   status: "student" | "alumni" | "participant"
+  studentId: string
   year: number
 }
 
-export interface User {
+export interface User extends UserCreateBody {
   email: string
   estamps: Estamp[]
-  faculty: string
-  name: string
-  nickname: string
-  status: string
-  year: number
 }
 
 export const createUser = async (credential: FirebaseUser, createBody: UserCreateBody) => {
