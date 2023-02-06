@@ -1,4 +1,4 @@
-import { Button } from "@components/common/Button"
+import { LinkButton } from "@components/common/Button"
 import { easeInOut, motion } from "framer-motion"
 import { DescribeRoute } from "@components/Meta/DescribeRoute"
 
@@ -16,7 +16,9 @@ function WelcomeText() {
         <p className="text-center">มาตามหาดอกไม้สำหรับคุณกัน</p>
       </div>
 
-      <Button type="primary">Ready ?</Button>
+      <LinkButton href="/register" type="primary">
+        Ready ?
+      </LinkButton>
     </motion.div>
   )
 }

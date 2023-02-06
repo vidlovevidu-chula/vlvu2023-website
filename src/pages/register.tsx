@@ -1,29 +1,11 @@
 import { Button } from "@components/common/Button"
-import firebaseApp from "@lib/firebase"
-import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth"
-import Image from "next/image"
+import { useAuth } from "@lib/auth"
+import GoogleIcon from "@vectors/icons/google"
 import { useRouter } from "next/router"
 
 export default function Register() {
-  const auth = getAuth(firebaseApp)
-
+  const auth = useAuth()
   const router = useRouter()
-
-  const googleLogin = async () => {
-    const provider = new GoogleAuthProvider()
-
-    try {
-      await signInWithPopup(auth, provider)
-
-      router.push("/registerform")
-    } catch (e) {
-      console.log(e)
-    }
-  }
-
-  const emailLogin = () => {
-    router.push("/emailregister")
-  }
 
   return (
     <div className="bg-vlvu-pink-100 font-display min-h-screen w-full">
@@ -35,20 +17,20 @@ export default function Register() {
           <div className="flex flex-col gap-3">
             <Button
               type="primary"
-              onClick={googleLogin}
-              className="bg-white flex gap-6 px-3 items-center pr-8 content-start"
+              onClick={() => auth?.signinWithGoogle}
+              className="bg-white flex gap-6 px-8 items-center content-start"
             >
-              <Image src="/assets/google-logo.svg" alt="google icon" height="32px" width="32px" />
+              <GoogleIcon height="32" width="32" className="" />
               <span className="grow text-start text-gray-500 font-semibold">Sign in with Google</span>
             </Button>
-            <Button
+            {/* <LinkButton
               type="primary"
-              onClick={emailLogin}
-              className="bg-white flex gap-6 px-3 items-center pr-8 content-start"
+              href="/emailregister"
+              className="bg-white flex gap-6 px-8 items-center content-start"
             >
               <Image src="/assets/email.svg" alt="email icon" height="32px" width="32px" />
               <span className="grow text-start text-gray-500 font-semibold">Sign in with Email</span>
-            </Button>
+            </LinkButton> */}
           </div>
         </div>
       </main>
