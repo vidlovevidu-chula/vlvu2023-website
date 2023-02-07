@@ -20,7 +20,7 @@ export interface IAuthContext {
   credential: FirebaseUser | null
   user: User | null
   createUser: (body: UserCreateBody) => Promise<void>
-  addEstamp: (estampId: string) => Promise<void>
+  addEstamp: (estampId: Estamp) => Promise<void>
   loading: boolean
   setLoading: Dispatch<SetStateAction<boolean>>
   signinWithGoogle: (redirect?: string | undefined) => Promise<void>
