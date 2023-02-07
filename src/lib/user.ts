@@ -1,7 +1,6 @@
-import { UserCredential, User as FirebaseUser } from "firebase/auth"
+import { User as FirebaseUser } from "firebase/auth"
 import { Estamp } from "./estamp"
-import { createUser as dbCreateUser, getCurrentUserData } from "@lib/db"
-import { DocumentData } from "firebase/firestore"
+import { createUser as dbCreateUser, getCurrentUserData, getUserRef, updateUser } from "@lib/db"
 
 export interface UserCreateBody {
   faculty: string
@@ -27,4 +26,12 @@ export const createUser = async (credential: FirebaseUser, createBody: UserCreat
 
 export const getUser: (credential: FirebaseUser) => Promise<null | User> = async (credential: FirebaseUser) => {
   return (await getCurrentUserData(credential.uid)) as User
+}
+
+export const getUserDoc = (credential: FirebaseUser) => {
+  return getUserRef(credential.uid)
+}
+
+export const updateEstamp: (credential: FirebaseUser, updatedEstamp: Estamp[]) => Promise<void> = async (credential: FirebaseUser, updatedEstamp: Estamp[]) => {
+  return await updateUser(credential.uid, { estamps: updatedEstamp })
 }

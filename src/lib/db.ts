@@ -12,11 +12,11 @@ export const getEstampCollection = () => {
   return collection(db, "estamps")
 }
 
-// export const updateUser = (uid: string, data: DocumentData): Promise<void> => {
-//   const userRef = getUserRef(uid)
+export const updateUser = (uid: string, data: DocumentData): Promise<void> => {
+  const userRef = getUserRef(uid)
 
-//   return updateDoc(userRef, data)
-// }
+  return updateDoc(userRef, data)
+}
 
 export const createUser = (uid: string, data: DocumentData): Promise<void> => {
   const userRef = getUserRef(uid)
@@ -47,4 +47,8 @@ export const getEstamps: () => Promise<DocumentData[]> = async () => {
   })
 
   return ret
+}
+
+export const addEstamp: (uid: string, estamp: string) => Promise<void> = async (uid: string, estamp: string) => {
+  
 }
