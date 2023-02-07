@@ -10,7 +10,9 @@ import {
   onAuthStateChanged,
 } from "firebase/auth"
 import firebaseApp from "./firebase"
-import { User, UserCreateBody, createUser as dbCreateUser, getUser } from "./user"
+import { User, UserCreateBody, createUser as dbCreateUser, getUserDoc, getUser, updateEstamp } from "./user"
+import { Estamp } from "./estamp"
+import { onSnapshot } from "firebase/firestore"
 
 const auth = getAuth(firebaseApp)
 
@@ -18,6 +20,7 @@ export interface IAuthContext {
   credential: FirebaseUser | null
   user: User | null
   createUser: (body: UserCreateBody) => Promise<void>
+  addEstamp: (estampId: Estamp) => Promise<void>
   loading: boolean
   setLoading: Dispatch<SetStateAction<boolean>>
   signinWithGoogle: (redirect?: string | undefined) => Promise<void>
@@ -48,10 +51,23 @@ function useProvideAuth() {
       }
 
       setCredential(newCredential)
+
+      onSnapshot(getUserDoc(newCredential), (data) => {
+        setUser(data.data() as User)
+      })
+
+      getUser(newCredential).then(user => {
+        if(!user) {
+          return
+        }
+
+        setUser(user)
+      })
     })
 
     return () => unsubscribe()
   }, [])
+
 
   const signinWithGoogle = async (redirect?: string | undefined) => {
     console.log("hello")
@@ -85,6 +101,16 @@ function useProvideAuth() {
     setUser(user)
   }
 
+  const addEstamp = async (estamp: Estamp) => {
+    if (!user || !credential) {
+      return
+    }
+
+    user.estamps.push(estamp)
+
+    updateEstamp(credential, user.estamps)
+  }
+
   return {
     user,
     credential,
@@ -93,5 +119,6 @@ function useProvideAuth() {
     createUser,
     signinWithGoogle,
     signout,
+    addEstamp,
   }
 }
