@@ -71,6 +71,11 @@ function PageRenderer({
 }) {
   const auth = useAuth()
 
+  if (auth && auth.user && auth.user.score != 0) {
+    setScore(auth.user.score)
+    setPage(28)
+  }
+
   switch (page) {
     case 0:
       return (
