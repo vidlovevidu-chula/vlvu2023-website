@@ -19,6 +19,8 @@ import { AnimatePresence, motion } from "framer-motion"
 import { Button } from "@/components/common/Button"
 import { addScore } from "@/lib/user"
 import { useAuth } from "@/lib/auth"
+import { useRouter } from "next/router"
+import { Loading } from "@/components/common/Loading"
 
 const AnimationProps = {
   initial: { opacity: 0 },
@@ -69,13 +71,6 @@ function PageRenderer({
   setPage: Dispatch<SetStateAction<number>>
   setScore: Dispatch<SetStateAction<number>>
 }) {
-  const auth = useAuth()
-
-  if (auth && auth.user && auth.user.score != 0) {
-    setScore(auth.user.score)
-    setPage(28)
-  }
-
   switch (page) {
     case 0:
       return (
@@ -689,8 +684,6 @@ function PageRenderer({
         </div>
       )
     case 28:
-      auth?.addScore(score)
-
       return (
         <div className="flex flex-col h-full justify-center items-center cursor-pointer">
           <p>Result!</p>
@@ -715,6 +708,8 @@ export default function Game() {
   const [page, setPage] = useState(0)
   const [score, setScore] = useState(0)
 
+  const auth = useAuth()
+
   const getBG = useCallback(
     (page: number) => {
       if (page === 0) return "bg-vlvu-pink-100 text-vlvu-pink-600"
@@ -726,6 +721,22 @@ export default function Game() {
     },
     [page]
   )
+
+  if (auth?.loading) {
+    return <Loading />
+  }
+
+  auth?.requireCred("/register")
+  auth?.requireUser("/registerform")
+
+  if (auth && auth.user && auth.user.score != 0 && page != 28) {
+    setScore(auth.user.score)
+    setPage(28)
+  }
+
+  if (page == 28) {
+    auth?.addScore(score)
+  }
 
   return (
     <div className={clsx("h-screen overflow-hidden", getBG(page))}>

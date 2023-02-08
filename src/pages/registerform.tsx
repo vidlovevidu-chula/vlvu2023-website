@@ -8,8 +8,13 @@ import { SelectField } from "@/components/common/SelectField"
 
 export default function Register() {
   const auth = useAuth()
+  
+  if(!auth) {
+    return
+  }
 
-  const router = useRouter()
+  auth.requireCred("/register")
+  auth.requireNotUser("/game")
 
   const handleSubmit = async ({
     nickname,
@@ -26,11 +31,6 @@ export default function Register() {
     studentId: string
     year: string
   }) => {
-    if (!auth || !auth.credential) {
-      router.push("/register")
-      return
-    }
-
     await auth.createUser({
       faculty,
       name,
@@ -39,12 +39,6 @@ export default function Register() {
       status: status as "student" | "alumni" | "participant",
       year: +year,
     })
-
-    router.push("/game")
-  }
-
-  if (auth && auth.user) {
-    router.push("/game")
   }
 
   return (
