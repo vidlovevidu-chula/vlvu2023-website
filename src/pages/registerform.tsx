@@ -45,7 +45,7 @@ export default function Register() {
 
   return (
     <div className="bg-vlvu-pink-100 font-display min-h-screen w-full">
-      <main className="text-vlvu-pink-500 mx-auto max-w-lg">
+      <main className="text-vlvu-pink-300 mx-auto max-w-lg">
         <div className="flex flex-col items-center justify-center h-screen gap-6">
           <div>
             <Image src="/assets/vlvu-logo.svg" alt="vid love vid u logo" width="96px" height="96px" />
@@ -88,7 +88,7 @@ export default function Register() {
             }}
           >
             {({ isSubmitting }) => (
-              <Form className="flex flex-col gap-2 font-semibold">
+              <Form className="flex flex-col gap-2 font-semibold text-vlvu-pink-500">
                 <TextField fieldName="nickname" fieldLabel="ชื่อเล่น" />
                 <TextField fieldName="name" fieldLabel="ชื่อ-สกุล" />
                 <SelectField

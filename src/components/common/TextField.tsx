@@ -18,10 +18,10 @@ export const TextField = ({
       <Field
         type="text"
         name={fieldName}
-        className={clsx("rounded-2xl p-2", className)}
+        className={clsx("rounded-2xl p-2 h-[40px]", className)}
         placeholder={placeholder || ""}
       />
-      <ErrorMessage name={fieldName} component="div" />
+      <ErrorMessage render={(msg:string) => <div className="text-vlvu-pink-600">{msg}</div>} name={fieldName} component="div" />
     </div>
   )
 }

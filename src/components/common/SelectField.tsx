@@ -17,7 +17,7 @@ export const SelectField = ({
   return (
     <div>
       <h2>{fieldLabel}</h2>
-      <Field as="select" name={fieldName} className={clsx("rounded-2xl p-2", className)}>
+      <Field as="select" name={fieldName} className={clsx("rounded-2xl w-4/6 h-[40px] appearance-none p-2 bg-red", className)}>
         {placeholder && (
           <option value="" selected disabled hidden>
             {placeholder}
