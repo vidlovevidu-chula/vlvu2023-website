@@ -1,4 +1,14 @@
-import { DocumentData, getFirestore, doc, setDoc, updateDoc, getDoc, collection, getDocs, getCountFromServer } from "firebase/firestore"
+import {
+  DocumentData,
+  getFirestore,
+  doc,
+  setDoc,
+  updateDoc,
+  getDoc,
+  collection,
+  getDocs,
+  getCountFromServer,
+} from "firebase/firestore"
 import { Estamp } from "./estamp"
 import firebaseApp from "./firebase"
 

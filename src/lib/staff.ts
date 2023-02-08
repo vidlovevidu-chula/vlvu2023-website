@@ -1,5 +1,5 @@
-import { getCurrentUserData, getEstamps, updateUser } from "@lib/db"
-import { getEstampCount } from "./estamp";
+import { getCurrentUserData, getEstamps, updateUser } from "@/lib/db"
+import { getEstampCount } from "./estamp"
 
 export enum RedeemError {
   UserNotFound,
@@ -8,14 +8,14 @@ export enum RedeemError {
 }
 
 /**
-  * @description must login with staff account
-  * @returns return null if sucess else RedeemError
-  */
+ * @description must login with staff account
+ * @returns return null if sucess else RedeemError
+ */
 export const redeem: (userId: string) => Promise<null | RedeemError> = async (userId: string) => {
   const user = await getCurrentUserData(userId)
 
   if (!user) {
-    return RedeemError.UserNotFound;
+    return RedeemError.UserNotFound
   }
 
   // check if user already redeemed
@@ -34,4 +34,3 @@ export const redeem: (userId: string) => Promise<null | RedeemError> = async (us
 
   return null
 }
-

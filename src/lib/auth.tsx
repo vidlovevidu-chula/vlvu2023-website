@@ -10,7 +10,15 @@ import {
   onAuthStateChanged,
 } from "firebase/auth"
 import firebaseApp from "./firebase"
-import { User, UserCreateBody, createUser as dbCreateUser, getUserDoc, getUser, updateEstamp } from "./user"
+import {
+  User,
+  UserCreateBody,
+  addScore as dbAddScore,
+  createUser as dbCreateUser,
+  getUserDoc,
+  getUser,
+  updateEstamp,
+} from "./user"
 import { Estamp } from "./estamp"
 import { onSnapshot } from "firebase/firestore"
 
@@ -21,6 +29,7 @@ export interface IAuthContext {
   user: User | null
   createUser: (body: UserCreateBody) => Promise<void>
   addEstamp: (estampId: Estamp) => Promise<void>
+  addScore: (score: number) => Promise<void>
   loading: boolean
   setLoading: Dispatch<SetStateAction<boolean>>
   signinWithGoogle: (redirect?: string | undefined) => Promise<void>
@@ -56,8 +65,8 @@ function useProvideAuth() {
         setUser(data.data() as User)
       })
 
-      getUser(newCredential).then(user => {
-        if(!user) {
+      getUser(newCredential).then((user) => {
+        if (!user) {
           return
         }
 
@@ -67,7 +76,6 @@ function useProvideAuth() {
 
     return () => unsubscribe()
   }, [])
-
 
   const signinWithGoogle = async (redirect?: string | undefined) => {
     console.log("hello")
@@ -108,7 +116,15 @@ function useProvideAuth() {
 
     user.estamps.push(estamp)
 
-    updateEstamp(credential, user.estamps)
+    await updateEstamp(credential, user.estamps)
+  }
+
+  const addScore = async (score: number) => {
+    if (!user || !credential) {
+      return
+    }
+
+    await dbAddScore(credential, score)
   }
 
   return {
@@ -120,5 +136,6 @@ function useProvideAuth() {
     signinWithGoogle,
     signout,
     addEstamp,
+    addScore,
   }
 }

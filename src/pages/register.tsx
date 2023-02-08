@@ -1,6 +1,6 @@
-import { Button } from "@components/common/Button"
-import { useAuth } from "@lib/auth"
-import GoogleIcon from "@vectors/icons/google"
+import { Button } from "@/components/common/Button"
+import { useAuth } from "@/lib/auth"
+import GoogleIcon from "@/vectors/icons/google"
 
 export default function Register() {
   const auth = useAuth()

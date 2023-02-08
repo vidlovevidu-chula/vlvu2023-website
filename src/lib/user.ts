@@ -1,7 +1,6 @@
 import { User as FirebaseUser } from "firebase/auth"
 import { Estamp } from "./estamp"
-import { createUser as dbCreateUser, getCurrentUserData, getUserRef, updateUser } from "@lib/db"
-
+import { createUser as dbCreateUser, getCurrentUserData, getUserRef, updateUser } from "@/lib/db"
 export interface UserCreateBody {
   faculty: string
   name: string
@@ -15,6 +14,7 @@ export interface User extends UserCreateBody {
   email: string
   estamps: Estamp[]
   redeemed: boolean
+  score: number
 }
 
 export const createUser = async (credential: FirebaseUser, createBody: UserCreateBody) => {
@@ -22,6 +22,7 @@ export const createUser = async (credential: FirebaseUser, createBody: UserCreat
     email: credential.email,
     estamps: [],
     redeemed: false,
+    score: 0,
     ...createBody,
   })
 }
@@ -34,7 +35,16 @@ export const getUserDoc = (credential: FirebaseUser) => {
   return getUserRef(credential.uid)
 }
 
-export const updateEstamp: (credential: FirebaseUser, updatedEstamp: Estamp[]) => Promise<void> = async (credential: FirebaseUser, updatedEstamp: Estamp[]) => {
+export const updateEstamp: (credential: FirebaseUser, updatedEstamp: Estamp[]) => Promise<void> = async (
+  credential: FirebaseUser,
+  updatedEstamp: Estamp[]
+) => {
   return await updateUser(credential.uid, { estamps: updatedEstamp })
 }
 
+export const addScore: (credential: FirebaseUser, score: number) => Promise<void> = async (
+  credential: FirebaseUser,
+  score: number
+) => {
+  return await updateUser(credential.uid, { score })
+}

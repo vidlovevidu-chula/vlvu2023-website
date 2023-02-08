@@ -17,6 +17,8 @@ import { Dispatch, ReactNode, SetStateAction, useCallback, useState } from "reac
 import clsx from "clsx"
 import { AnimatePresence, motion } from "framer-motion"
 import { Button } from "@/components/common/Button"
+import { addScore } from "@/lib/user"
+import { useAuth } from "@/lib/auth"
 
 const AnimationProps = {
   initial: { opacity: 0 },
@@ -67,6 +69,8 @@ function PageRenderer({
   setPage: Dispatch<SetStateAction<number>>
   setScore: Dispatch<SetStateAction<number>>
 }) {
+  const auth = useAuth()
+
   switch (page) {
     case 0:
       return (
@@ -680,6 +684,8 @@ function PageRenderer({
         </div>
       )
     case 28:
+      auth?.addScore(score)
+
       return (
         <div className="flex flex-col h-full justify-center items-center cursor-pointer">
           <p>Result!</p>

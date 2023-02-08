@@ -10,6 +10,5 @@ export const getAllEstamps = async () => {
 
 export const getEstampCount = async () => {
   // remove template
-  return await dbEstampCount() - 1
+  return (await dbEstampCount()) - 1
 }
-

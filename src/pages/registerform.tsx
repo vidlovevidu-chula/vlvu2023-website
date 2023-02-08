@@ -1,10 +1,10 @@
-import { useAuth } from "@lib/auth"
+import { useAuth } from "@/lib/auth"
 import { useRouter } from "next/router"
 import Image from "next/image"
 import { Formik, Form } from "formik"
-import faculties from "@data/faculties"
-import { TextField } from "@components/common/TextField"
-import { SelectField } from "@components/common/SelectField"
+import faculties from "@/data/faculties"
+import { TextField } from "@/components/common/TextField"
+import { SelectField } from "@/components/common/SelectField"
 
 export default function Register() {
   const auth = useAuth()
@@ -40,7 +40,11 @@ export default function Register() {
       year: +year,
     })
 
-    alert("create successful, please redirect to somewhere else")
+    router.push("/game")
+  }
+
+  if (auth && auth.user) {
+    router.push("/game")
   }
 
   return (
