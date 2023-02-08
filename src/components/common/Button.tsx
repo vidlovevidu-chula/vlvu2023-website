@@ -8,7 +8,7 @@ export function Button({
   onClick,
   className,
 }: {
-  type: "primary" | "secondary"
+  type: "primary" | "secondary" | "white"
   children: ReactNode
   onClick?: () => void
   className?: string
@@ -20,6 +20,7 @@ export function Button({
         "py-2 px-14 rounded-2xl transition-colors duration-200",
         type === "primary" && "bg-vlvu-pink-400 text-vlvu-pink-500 hover:bg-vlvu-pink-500 hover:text-white",
         type === "secondary" && "bg-vlvu-pink-500 text-white hover:bg-vlvu-pink-600",
+        type === "white" && "bg-white text-vlvu-pink-500 hover:text-vlvu-pink-500 hover:bg-gray-100",
         className
       )}
     >
@@ -40,8 +41,8 @@ export function LinkButton({
   children: ReactNode
   href: string
   className?: string
-  onMouseOver?: ()=> void
-  onMouseLeave?: ()=> void
+  onMouseOver?: () => void
+  onMouseLeave?: () => void
 }) {
   return (
     <Link href={href}>
@@ -50,7 +51,8 @@ export function LinkButton({
         onMouseLeave={onMouseLeave}
         className={clsx(
           "py-2 px-14 rounded-2xl transition-colors duration-200 w-[12rem] text-center",
-          type === "primary" && "bg-vlvu-pink-400 text-vlvu-pink-500 hover:bg-vlvu-pink-500 hover:text-white hover:{children=value}",
+          type === "primary" &&
+            "bg-vlvu-pink-400 text-vlvu-pink-500 hover:bg-vlvu-pink-500 hover:text-white hover:{children=value}",
           type === "secondary" && "bg-vlvu-pink-500 text-white hover:bg-vlvu-pink-600",
           className
         )}
