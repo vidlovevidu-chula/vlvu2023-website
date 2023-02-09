@@ -1,23 +1,29 @@
 import { useAuth } from "@/lib/auth"
-import { useRouter } from "next/router"
 import Image from "next/image"
 import { Formik, Form } from "formik"
 import faculties from "@/data/faculties"
 import { TextField } from "@/components/common/TextField"
 import { SelectField } from "@/components/common/SelectField"
+import { Loading } from "@/components/common/Loading"
 import { useEffect } from "react"
+import { validateForm } from "@/lib/validate"
+import { AnimatePresence, motion } from "framer-motion"
 
-export default function Register() {
+export default function RegisterForm() {
   const auth = useAuth()
 
   if (!auth) {
     return
   }
 
+  if (auth.loading) {
+    return <Loading />
+  }
+
   useEffect(() => {
     auth.requireCred("/register")
     auth.requireNotUser("/game")
-  }, [])
+  }, [auth])
 
   const handleSubmit = async ({
     nickname,
@@ -53,33 +59,7 @@ export default function Register() {
           </div>
           <Formik
             initialValues={{ nickname: "", name: "", status: "", faculty: "", studentId: "", year: "" }}
-            validate={(values) => {
-              const errors: any = {}
-
-              if (values.faculty == "") {
-                errors.faculty = "กรุณาเลือกคณะ"
-              }
-
-              if (values.status == "") {
-                errors.stutus = "กรุณาเลือกสถานภาพ"
-              }
-
-              if (values.status == "student") {
-                if (isNaN(+values.studentId) || values.studentId.length != 10) {
-                  errors.studentId = "รหัสนิสิตไม่ถูกต้อง"
-                }
-              } else {
-                if (values.studentId != "-") {
-                  errors.studentId = "กรอกรหัสนิสิตด้วย '-'"
-                }
-              }
-
-              if (!(1 <= +values.year && +values.year <= 6)) {
-                errors.year = "ชั้นปีไม่ถูกต้อง"
-              }
-
-              return errors
-            }}
+            validate={validateForm}
             onSubmit={async (values, { setSubmitting }) => {
               setSubmitting(true)
 
@@ -88,9 +68,9 @@ export default function Register() {
               setSubmitting(false)
             }}
           >
-            {({ isSubmitting }) => (
+            {({ isSubmitting, values }) => (
               <Form className="flex flex-col gap-3 font-semibold text-vlvu-pink-500">
-                <p className="text-center">Logged in as {auth?.user?.email}</p>
+                <p className="text-center">Logged in as {auth?.credential?.email}</p>
                 <TextField fieldName="nickname" fieldLabel="ชื่อเล่น" placeholder="username" />
                 <TextField fieldName="name" fieldLabel="ชื่อ-สกุล" placeholder="John Doe" />
                 <SelectField
@@ -104,14 +84,31 @@ export default function Register() {
                   placeholder="สถานภาพ"
                   className="w-3/5"
                 />
-                <SelectField
-                  fieldLabel="คณะ"
-                  fieldName="faculty"
-                  options={faculties.map((faculty) => [faculty, faculty])}
-                  placeholder="คณะ"
-                />
-                <TextField fieldName="studentId" fieldLabel="รหัสนิสิต (หากไม่ใช่ -)" />
-                <TextField fieldName="year" fieldLabel="ชั้นปี" className="w-1/5" />
+                {
+                  values.status == "student" &&
+                  <>
+                    <AnimatePresence>
+                      {/* seperate motion.div because it count as one flex item so gap does not apply */}
+                      <motion.div key="faculty-motion" initial={{ y: -20, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
+                        <SelectField
+                          fieldLabel="คณะ"
+                          fieldName="faculty"
+                          options={faculties.map((faculty) => [faculty, faculty])}
+                          placeholder="คณะ"
+                        />
+                      </motion.div>
+                      <motion.div key="year-motion" initial={{ y: -20, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
+                        <TextField fieldName="year" fieldLabel="ชั้นปี" className="w-1/5" />
+                      </motion.div>
+                      {
+                        ["คณะวิศวกรรมศาสตร์", "คณะวิทยาศาสตร์"].includes(values.faculty) &&
+                        <motion.div key="studentId-motion" initial={{ y: -20, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
+                          <TextField fieldName="studentId" fieldLabel="รหัสนิสิต" />
+                        </motion.div>
+                      }
+                    </AnimatePresence>
+                  </>
+                }
 
                 <button type="submit" disabled={isSubmitting || !auth?.credential} className="w-1/6 self-end">
                   ถัดไป
