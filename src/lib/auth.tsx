@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, ReactNode, Dispatch, SetStateAction } from "react"
-import Router from "next/router"
+import Router, { useRouter } from "next/router"
 
 import {
   getAuth,
@@ -10,7 +10,15 @@ import {
   onAuthStateChanged,
 } from "firebase/auth"
 import firebaseApp from "./firebase"
-import { User, UserCreateBody, createUser as dbCreateUser, getUserDoc, getUser, updateEstamp } from "./user"
+import {
+  User,
+  UserCreateBody,
+  addScore as dbAddScore,
+  createUser as dbCreateUser,
+  getUserDoc,
+  getUser,
+  updateEstamp,
+} from "./user"
 import { Estamp } from "./estamp"
 import { onSnapshot } from "firebase/firestore"
 
@@ -21,10 +29,14 @@ export interface IAuthContext {
   user: User | null
   createUser: (body: UserCreateBody) => Promise<void>
   addEstamp: (estampId: Estamp) => Promise<void>
+  addScore: (score: number) => Promise<void>
   loading: boolean
-  setLoading: Dispatch<SetStateAction<boolean>>
   signinWithGoogle: (redirect?: string | undefined) => Promise<void>
   signout: () => void
+  requireCred: (redirect: string) => boolean
+  requireNotCred: (redirect: string) => boolean
+  requireUser: (redirect: string) => boolean
+  requireNotUser: (redirect: string) => boolean
 }
 
 const AuthContext = React.createContext<IAuthContext | null>(null)
@@ -43,9 +55,14 @@ function useProvideAuth() {
   const [credential, setCredential] = useState<FirebaseUser | null>(null)
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
+  const router = useRouter()
+
+  const timeoutCancel = setTimeout(() => setLoading(false), 1000)
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (newCredential) => {
+      clearTimeout(timeoutCancel)
+
       if (!newCredential || credential) {
         return
       }
@@ -56,21 +73,20 @@ function useProvideAuth() {
         setUser(data.data() as User)
       })
 
-      getUser(newCredential).then(user => {
-        if(!user) {
+      getUser(newCredential).then((user) => {
+        if (!user) {
           return
         }
-
         setUser(user)
+
+        setLoading(false)
       })
     })
 
     return () => unsubscribe()
   }, [])
 
-
   const signinWithGoogle = async (redirect?: string | undefined) => {
-    console.log("hello")
     setLoading(true)
 
     const credential = await signInWithPopup(auth, new GoogleAuthProvider())
@@ -108,17 +124,53 @@ function useProvideAuth() {
 
     user.estamps.push(estamp)
 
-    updateEstamp(credential, user.estamps)
+    await updateEstamp(credential, user.estamps)
+  }
+
+  const addScore = async (score: number) => {
+    if (!user || !credential) {
+      return
+    }
+
+    await dbAddScore(credential, score)
+  }
+
+  const requireCred = (redirect: string) => {
+    if (!credential) {
+      router.push(redirect)
+    }
+  }
+
+  const requireUser = (redirect: string) => {
+    if (!user) {
+      router.push(redirect)
+    }
+  }
+
+  const requireNotCred = (redirect: string) => {
+    if (credential) {
+      router.push(redirect)
+    }
+  }
+
+  const requireNotUser = (redirect: string) => {
+    if (user) {
+      router.push(redirect)
+    }
   }
 
   return {
     user,
     credential,
     loading,
-    setLoading,
     createUser,
     signinWithGoogle,
     signout,
     addEstamp,
+    addScore,
+    requireUser,
+    requireCred,
+    requireNotCred,
+    requireNotUser,
   }
 }

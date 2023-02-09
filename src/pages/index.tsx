@@ -1,12 +1,12 @@
-import { LinkButton } from "@components/common/Button"
+import { LinkButton } from "@/components/common/Button"
 import { easeInOut, motion } from "framer-motion"
-import { DescribeRoute } from "@components/Meta/DescribeRoute"
-import React from 'react';
-import { useState } from "react";
+import { DescribeRoute } from "@/components/Meta/DescribeRoute"
+import React from "react"
+import { useState } from "react"
 
 function WelcomeText() {
-  const initText = "Ready ?";
-  const [text,setText] = useState(initText);
+  const initText = "Ready ?"
+  const [text, setText] = useState(initText)
 
   return (
     <motion.div
@@ -21,7 +21,16 @@ function WelcomeText() {
         <p className="text-center mt-[7px]">มาตามหาดอกไม้สำหรับคุณกัน</p>
       </div>
 
-      <LinkButton href="/register" type="primary" onMouseOver={()=>{setText("Let start !")}} onMouseLeave={() => {setText(initText)}}>
+      <LinkButton
+        href="/register"
+        type="primary"
+        onMouseOver={() => {
+          setText("Let start !")
+        }}
+        onMouseLeave={() => {
+          setText(initText)
+        }}
+      >
         {text}
       </LinkButton>
     </motion.div>

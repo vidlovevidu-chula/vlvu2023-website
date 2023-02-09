@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from "react"
 import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, User as FirebaseUser } from "firebase/auth"
-import firebaseApp from "@lib/firebase"
-import { createUser, getUser, User } from "@lib/user"
+import firebaseApp from "@/lib/firebase"
+import { createUser, getUser, User } from "@/lib/user"
 
 const UserCard: FC<{ user: User }> = ({ user }) => {
   const keys = Object.keys(user) as (keyof User)[]

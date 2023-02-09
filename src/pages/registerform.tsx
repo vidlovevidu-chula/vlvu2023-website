@@ -1,15 +1,20 @@
-import { useAuth } from "@lib/auth"
+import { useAuth } from "@/lib/auth"
 import { useRouter } from "next/router"
 import Image from "next/image"
 import { Formik, Form } from "formik"
-import faculties from "@data/faculties"
-import { TextField } from "@components/common/TextField"
-import { SelectField } from "@components/common/SelectField"
+import faculties from "@/data/faculties"
+import { TextField } from "@/components/common/TextField"
+import { SelectField } from "@/components/common/SelectField"
 
 export default function Register() {
   const auth = useAuth()
+  
+  if(!auth) {
+    return
+  }
 
-  const router = useRouter()
+  auth.requireCred("/register")
+  auth.requireNotUser("/game")
 
   const handleSubmit = async ({
     nickname,
@@ -26,11 +31,6 @@ export default function Register() {
     studentId: string
     year: string
   }) => {
-    if (!auth || !auth.credential) {
-      router.push("/register")
-      return
-    }
-
     await auth.createUser({
       faculty,
       name,
@@ -39,8 +39,6 @@ export default function Register() {
       status: status as "student" | "alumni" | "participant",
       year: +year,
     })
-
-    alert("create successful, please redirect to somewhere else")
   }
 
   return (
