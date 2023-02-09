@@ -17,9 +17,13 @@ export const SelectField = ({
   return (
     <div>
       <h2>{fieldLabel}</h2>
-      <Field as="select" name={fieldName} className={clsx("rounded-2xl w-4/6 h-[40px] appearance-none p-2 bg-red", className)}>
+      <Field
+        as="select"
+        name={fieldName}
+        className={clsx("rounded-lg shadow-sm w-4/6 h-[40px] appearance-none p-2 bg-red", className)}
+      >
         {placeholder && (
-          <option value="" selected disabled hidden>
+          <option className="" value="" selected disabled hidden>
             {placeholder}
           </option>
         )}
@@ -31,7 +35,7 @@ export const SelectField = ({
           )
         })}
       </Field>
-      <ErrorMessage name={fieldName} component="div" />
+      <ErrorMessage className="my-2" name={fieldName} component="div" />
     </div>
   )
 }

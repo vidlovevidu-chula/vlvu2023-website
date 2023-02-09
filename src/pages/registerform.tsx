@@ -5,16 +5,19 @@ import { Formik, Form } from "formik"
 import faculties from "@/data/faculties"
 import { TextField } from "@/components/common/TextField"
 import { SelectField } from "@/components/common/SelectField"
+import { useEffect } from "react"
 
 export default function Register() {
   const auth = useAuth()
-  
-  if(!auth) {
+
+  if (!auth) {
     return
   }
 
-  auth.requireCred("/register")
-  auth.requireNotUser("/game")
+  useEffect(() => {
+    auth.requireCred("/register")
+    auth.requireNotUser("/game")
+  }, [])
 
   const handleSubmit = async ({
     nickname,
@@ -42,7 +45,7 @@ export default function Register() {
   }
 
   return (
-    <div className="bg-vlvu-pink-100 font-display min-h-screen w-full">
+    <div className="bg-vlvu-pink-100 font-display min-h-screen w-full py-12">
       <main className="text-vlvu-pink-300 mx-auto max-w-lg">
         <div className="flex flex-col items-center justify-center h-screen gap-6">
           <div>
@@ -86,9 +89,10 @@ export default function Register() {
             }}
           >
             {({ isSubmitting }) => (
-              <Form className="flex flex-col gap-2 font-semibold text-vlvu-pink-500">
-                <TextField fieldName="nickname" fieldLabel="ชื่อเล่น" />
-                <TextField fieldName="name" fieldLabel="ชื่อ-สกุล" />
+              <Form className="flex flex-col gap-3 font-semibold text-vlvu-pink-500">
+                <p className="text-center">Logged in as {auth?.user?.email}</p>
+                <TextField fieldName="nickname" fieldLabel="ชื่อเล่น" placeholder="username" />
+                <TextField fieldName="name" fieldLabel="ชื่อ-สกุล" placeholder="John Doe" />
                 <SelectField
                   fieldLabel="สถานภาพ"
                   fieldName="status"
@@ -97,17 +101,18 @@ export default function Register() {
                     ["ศิษย์เก่า", "alumni"],
                     ["ผู้เข้าร่วมงาน", "participant"],
                   ]}
-                  placeholder=" "
+                  placeholder="สถานภาพ"
                   className="w-3/5"
                 />
-                <TextField fieldName="studentId" fieldLabel="รหัสนิสิต (หากไม่ใช่ -)" />
                 <SelectField
                   fieldLabel="คณะ"
                   fieldName="faculty"
                   options={faculties.map((faculty) => [faculty, faculty])}
-                  placeholder=" "
+                  placeholder="คณะ"
                 />
+                <TextField fieldName="studentId" fieldLabel="รหัสนิสิต (หากไม่ใช่ -)" />
                 <TextField fieldName="year" fieldLabel="ชั้นปี" className="w-1/5" />
+
                 <button type="submit" disabled={isSubmitting || !auth?.credential} className="w-1/6 self-end">
                   ถัดไป
                 </button>

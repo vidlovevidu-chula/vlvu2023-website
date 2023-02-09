@@ -33,10 +33,10 @@ export interface IAuthContext {
   loading: boolean
   signinWithGoogle: (redirect?: string | undefined) => Promise<void>
   signout: () => void
-  requireCred: (redirect: string) => boolean
-  requireNotCred: (redirect: string) => boolean
-  requireUser: (redirect: string) => boolean
-  requireNotUser: (redirect: string) => boolean
+  requireCred: (redirect: string) => void
+  requireNotCred: (redirect: string) => void
+  requireUser: (redirect: string) => void
+  requireNotUser: (redirect: string) => void
 }
 
 const AuthContext = React.createContext<IAuthContext | null>(null)
@@ -96,7 +96,7 @@ function useProvideAuth() {
     setLoading(false)
 
     if (redirect) {
-      Router.push(redirect)
+      router.push(redirect)
     }
   }
 
