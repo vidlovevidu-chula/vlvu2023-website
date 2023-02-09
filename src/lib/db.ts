@@ -1,4 +1,4 @@
-import { DocumentData, getFirestore, doc, setDoc, updateDoc, getDoc, collection, getDocs } from "firebase/firestore"
+import { DocumentData, getFirestore, doc, setDoc, updateDoc, getDoc, collection, getDocs, getCountFromServer } from "firebase/firestore"
 import { Estamp } from "./estamp"
 import firebaseApp from "./firebase"
 
@@ -35,7 +35,7 @@ export const getCurrentUserData = async (uid: string): Promise<null | DocumentDa
   }
 }
 
-export const getEstamps: () => Promise<DocumentData[]> = async () => {
+export const getEstamps: () => Promise<Estamp[]> = async () => {
   const estampsCollection = getEstampCollection()
 
   const docs = await getDocs(estampsCollection)
@@ -49,6 +49,6 @@ export const getEstamps: () => Promise<DocumentData[]> = async () => {
   return ret
 }
 
-export const addEstamp: (uid: string, estamp: string) => Promise<void> = async (uid: string, estamp: string) => {
-  
+export const getEstampCount = async () => {
+  return (await getCountFromServer(getEstampCollection())).data().count
 }
