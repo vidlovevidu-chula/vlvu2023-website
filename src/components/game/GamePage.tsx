@@ -174,7 +174,7 @@ export function PageRenderer({
 
           <p className="font-semibold text-center text-xl relative">เอาหล่ะ จะปลุกแล้วนะ</p>
 
-          <Button type="white" onClick={() => setPage(page + 1)} className="relative z-10 mt-6">
+          <Button type="white" onClick={() => setPage(page + 1)} className="relative z-10 mt-6 px-6 py-3">
             พร้อมแล้ว
           </Button>
         </div>

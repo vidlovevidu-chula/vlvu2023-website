@@ -8,15 +8,17 @@ import { Cloud } from "@/components/common/Cloud"
 import { FlyInBackground } from "@/components/common/FlyInBackground"
 import { HandFlower } from "@/components/common/HandFlower"
 import { useAuth } from "@/lib/auth"
+import { useRouter } from "next/router"
 
 function WelcomeText() {
   const initText = "Ready ?"
   const [text, setText] = useState(initText)
   const auth = useAuth()
+  const router = useRouter()
 
   useEffect(() => {
     auth?.requireNotGame("/card")
-  }, [])
+  }, [router])
 
   return (
     <motion.div
