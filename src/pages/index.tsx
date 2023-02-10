@@ -5,6 +5,8 @@ import React from "react"
 import { useState } from "react"
 import Image from "next/image"
 import { Cloud } from "@/components/common/Cloud"
+import { FlyInBackground } from "@/components/common/FlyInBackground"
+import { HandFlower } from "@/components/common/HandFlower"
 
 function WelcomeText() {
   const initText = "Ready ?"
@@ -39,40 +41,10 @@ function WelcomeText() {
   )
 }
 
-function FlyInBackground() {
-  return(
-    <motion.div
-      initial={{ opacity: 0 , y: "-100vh" }}
-      animate={{ opacity: 1 , y: "10vh" ,x: "0"}}
-      exit={{ opacity: 0 }}
-      transition={{duration: 1}}
-    >
-      <div className="items-center justify-items-center">
-        <Image src="/assets/purple-bg.svg" width="318px" height="245.5px" />
-      </div>
-    </motion.div>
-  )
-}
-
 const variants1 = {
   hidden: {
     opacity: 0 , 
-    y: "-100vh"
-  },
-  visible: {
-    opacity: 1 , 
-    y: "0vh" ,
-    x: "0"
-  },
-  end:{
-
-  }
-}
-
-const variants2 = {
-  hidden: {
-    opacity: 0 , 
-    y: "-100vh"
+    x: "-100%"
   },
   visible: {
     opacity: 1 , 
@@ -84,15 +56,30 @@ const variants2 = {
   }
 }
 
-const variants3 = {
+const variants2 = {
   hidden: {
     opacity: 0 , 
-    y: "-100vh"
+    x: "200%"
   },
   visible: {
     opacity: 1 , 
-    y: "40vh" ,
-    x: "0"
+    y: "12vh" ,
+    x: "62%"
+  },
+  end:{
+
+  }
+}
+
+const variants3 = {
+  hidden: {
+    opacity: 0 , 
+    x: "200%"
+  },
+  visible: {
+    opacity: 1 , 
+    y: "30vh" ,
+    x: "52%"
   },
   end:{
 
@@ -108,6 +95,7 @@ export default function Home() {
           <div>
             <FlyInBackground />
           </div>
+          <HandFlower />
           <Cloud variants={variants1}></Cloud>
           <Cloud variants={variants2}></Cloud>
           <Cloud variants={variants3}></Cloud>

@@ -12,9 +12,9 @@ export const Cloud = ({
             initial="hidden"
             animate="visible"
             exit="end"
-            transition={{duration: 1}}
+            transition={{duration: 1.5}}
         >
-        <div className="items-center justify-items-center">
+        <div className="absolute">
             <Image src="/assets/cloud.svg" width="160px" height="64px" />
         </div>
         </motion.div>
