@@ -1,5 +1,6 @@
 import { ImageResponse } from "@vercel/og"
 import { NextApiRequest, NextApiResponse } from "next"
+import { useEffect } from "react"
 
 const qrcode = require("yaqrcode")
 
@@ -14,28 +15,6 @@ const BGImgSrc = fetch(new URL("../../images/ticket/bg.png", import.meta.url))
 
 const SIZE = 180
 
-// Flowers
-
-const daisyImgSrc = fetch(new URL(`../../images/flower/daisy.png`, import.meta.url))
-  .then((res) => res.blob())
-  .then((blob) => URL.createObjectURL(blob))
-
-const forgetMeNotImgSrc = fetch(new URL(`../../images/flower/forget_me_not.png`, import.meta.url))
-  .then((res) => res.blob())
-  .then((blob) => URL.createObjectURL(blob))
-
-const roseImgSrc = fetch(new URL(`../../images/flower/rose.png`, import.meta.url))
-  .then((res) => res.blob())
-  .then((blob) => URL.createObjectURL(blob))
-
-const sunflowerImgSrc = fetch(new URL(`../../images/flower/sunflower.png`, import.meta.url))
-  .then((res) => res.blob())
-  .then((blob) => URL.createObjectURL(blob))
-
-const tulipImgSrc = fetch(new URL(`../../images/flower/tulip.png`, import.meta.url))
-  .then((res) => res.blob())
-  .then((blob) => URL.createObjectURL(blob))
-
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const url = new URL(req.url ?? "")
   const uid = url.searchParams.get("uid") ?? ""
@@ -49,6 +28,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const base64 = qrcode(uid, {
     size: SIZE,
   })
+
+  // render flower image based on
+
+  // Flowers
+
+  // const flowerImgSrc = fetch(`${req.url}/assets/flower/${type}.png`)
+  //   .then((res) => res.blob())
+  //   .then((blob) => URL.createObjectURL(blob))
 
   return new ImageResponse(
     (
@@ -82,13 +69,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         </div>
 
         <div style={{ zIndex: "50", bottom: 130, right: 90 }} tw="flex absolute">
-          {type === "daisy" && <img alt="daisy" height={150} src={await daisyImgSrc} width={150} />}
+          <img alt="flower" height={150} src={`${url.origin}/assets/flower/${type}.png`} width={150} />
+          {/* {type === "daisy" && <img alt="daisy" height={150} src={await daisyImgSrc} width={150} />}
           {type === "forget_me_not" && (
             <img alt="forget_me_not" height={150} src={await forgetMeNotImgSrc} width={150} />
           )}
           {type === "rose" && <img alt="rose" height={150} src={await roseImgSrc} width={150} />}
           {type === "sunflower" && <img alt="sunflower" height={150} src={await sunflowerImgSrc} width={150} />}
-          {type === "tulip" && <img alt="tulip" height={150} src={await tulipImgSrc} width={150} />}
+          {type === "tulip" && <img alt="tulip" height={150} src={await tulipImgSrc} width={150} />} */}
         </div>
       </div>
     ),
