@@ -9,9 +9,15 @@ import QRCode from "react-qr-code"
 export function Ticket({ nickname, flower, uid }: { nickname: string; flower: FlowerType; uid: string }) {
   return (
     <div className="relative">
-      <div style={{ top: "5.5rem" }} className="absolute left-1/2 -translate-x-1/2 z-20">
-        <p style={{ width: "15rem" }} className="text-vlvu-pink-600 font-bold font-name text-4xl text-center">
-          {nickname}
+      <div
+        style={{ top: nickname.length <= 13 ? "5.65rem" : "5.8rem" }}
+        className="absolute left-1/2 -translate-x-1/2 z-20"
+      >
+        <p
+          style={{ width: "15rem", fontSize: nickname.length <= 13 ? "1.9rem" : "1.45rem", lineHeight: "2.5rem" }}
+          className="text-[#C697C5] font-bold font-name text-center"
+        >
+          {nickname.length <= 18 ? nickname : nickname.slice(0, 18) + "..."}
         </p>
       </div>
 
