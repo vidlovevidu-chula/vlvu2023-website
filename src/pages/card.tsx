@@ -64,7 +64,14 @@ export default function Card() {
         </LinkButton>
         <Button
           onClick={() => {
-            // auth?.signout("/")
+            // download from /api/og
+            const a = document.createElement("a")
+            a.href = `/api/og?uid=${auth?.credential?.uid}&name=${auth?.user?.nickname}&type=${getFlowerType(
+              auth?.user?.score ?? 0
+            )}`
+
+            a.download = "vlvu.png"
+            a.click()
           }}
           type="white"
           className="shadow-md px-0 py-3 w-full flex gap-1 justify-center items-center"
