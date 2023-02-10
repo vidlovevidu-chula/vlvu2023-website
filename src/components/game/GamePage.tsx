@@ -13,14 +13,10 @@ import bookImg from "@/images/game/book.gif"
 import flowerImg from "@/images/game/flower.gif"
 import wandImg from "@/images/game/wand.gif"
 
-import { Dispatch, ReactNode, SetStateAction, useCallback, useEffect, useState } from "react"
-import clsx from "clsx"
-import { AnimatePresence, motion } from "framer-motion"
+import { Dispatch, ReactNode, SetStateAction, useRef } from "react"
+import { motion } from "framer-motion"
 import { Button, LinkButton } from "@/components/common/Button"
 import { addScore } from "@/lib/user"
-import { useAuth } from "@/lib/auth"
-import { useRouter } from "next/router"
-import { Loading } from "@/components/common/Loading"
 import { flowerDescription, flowerName, getFlowerType } from "@/data/flower"
 import FlowerImg from "@/components/common/FlowerImg"
 import ChoiceButton from "./ChoiceButton"
@@ -44,12 +40,18 @@ export function PageRenderer({
   score,
   setPage,
   setScore,
+  resetScore,
+  dbSubmitScore,
 }: {
   page: number
   score: number
   setPage: Dispatch<SetStateAction<number>>
   setScore: Dispatch<SetStateAction<number>>
+  resetScore: () => void
+  dbSubmitScore: () => void
 }) {
+  const timeOutRef = useRef<NodeJS.Timeout>()
+
   switch (page) {
     case 0:
       return (
@@ -130,7 +132,7 @@ export function PageRenderer({
           className="flex flex-col h-full justify-center items-center cursor-pointer"
           onClick={() => {
             setPage(page + 1)
-            setTimeout(() => setPage(8), 2500)
+            timeOutRef.current = setTimeout(() => setPage(8), 2500)
           }}
         >
           <div className="w-64 -mt-6 -mb-6">
@@ -142,7 +144,10 @@ export function PageRenderer({
       return (
         <div
           className="flex flex-col h-full justify-center items-center cursor-pointer"
-          onClick={() => setPage(page + 1)}
+          onClick={() => {
+            clearTimeout(timeOutRef?.current)
+            setPage(page + 1)
+          }}
         >
           <motion.div
             initial={{ scale: 0 }}
@@ -152,18 +157,6 @@ export function PageRenderer({
             key={page}
             className="w-96 h-96 bg-vlvu-pink-100 blur-3xl rounded-full"
           />
-          {/* 
-          <motion.button
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1.2, delay: 3.0, transition: "easeInOut" }}
-            key={page}
-            onClick={() => setPage(page + 1)}
-            className="w-64 absolute right-0 bottom-0 opacity-40 hover:opacity-80 transition-opacity"
-          >
-            <Image layout="responsive" src={tapImg} alt="tap!" />
-          </motion.button> */}
         </div>
       )
     case 8:
@@ -364,7 +357,7 @@ export function PageRenderer({
           className="flex flex-col h-full justify-center items-center cursor-pointer"
           onClick={() => {
             setPage(page + 1)
-            setTimeout(() => setPage(16), 2500)
+            timeOutRef.current = setTimeout(() => setPage(16), 2500)
           }}
         >
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96">
@@ -376,7 +369,10 @@ export function PageRenderer({
       return (
         <div
           className="flex flex-col h-full justify-center items-center cursor-pointer"
-          onClick={() => setPage(page + 1)}
+          onClick={() => {
+            clearTimeout(timeOutRef?.current)
+            setPage(page + 1)
+          }}
         >
           <motion.div
             initial={{ scale: 0 }}
@@ -386,18 +382,6 @@ export function PageRenderer({
             key={page}
             className="w-96 h-96 bg-vlvu-pink-500 blur-3xl rounded-full"
           />
-
-          {/* <motion.button
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1.2, delay: 3.0, transition: "easeInOut" }}
-            key={page}
-            onClick={() => setPage(page + 1)}
-            className="w-64 absolute right-0 bottom-0 opacity-40 hover:opacity-80 transition-opacity"
-          >
-            <Image layout="responsive" src={tapImg} alt="tap!" />
-          </motion.button> */}
         </div>
       )
     case 16:
@@ -684,7 +668,10 @@ export function PageRenderer({
         <div
           onClick={() => {
             setPage((page) => page + 1)
-            setTimeout(() => setPage(28), 2500)
+            timeOutRef.current = setTimeout(() => {
+              dbSubmitScore()
+              setPage(28)
+            }, 2500)
           }}
           className="flex flex-col h-full justify-center items-center cursor-pointer"
         >
@@ -717,7 +704,11 @@ export function PageRenderer({
       return (
         <div
           className="flex flex-col h-full justify-center items-center cursor-pointer"
-          onClick={() => setPage(page + 1)}
+          onClick={() => {
+            clearTimeout(timeOutRef?.current)
+            dbSubmitScore()
+            setPage(page + 1)
+          }}
         >
           <motion.div
             initial={{ scale: 0 }}
@@ -727,18 +718,6 @@ export function PageRenderer({
             key={page}
             className="w-96 h-96 bg-vlvu-pink-100 blur-3xl rounded-full"
           />
-
-          {/* <motion.button
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1.2, delay: 3.0, transition: "easeInOut" }}
-            key={page}
-            onClick={() => setPage(page + 1)}
-            className="w-64 absolute right-0 bottom-0 opacity-40 hover:opacity-80 transition-opacity"
-          >
-            <Image layout="responsive" src={tapImg} alt="tap!" />
-          </motion.button> */}
         </div>
       )
     case 28:
@@ -755,15 +734,21 @@ export function PageRenderer({
           <div className="mt-6 flex gap-2">
             <Button
               onClick={() => {
-                setPage(0)
-                setScore(0)
+                resetScore()
               }}
               className="w-48 shadow-md"
               type="white"
             >
               เล่นเกมใหม่
             </Button>
-            <LinkButton href="/card" className="w-48 shadow-md" type="secondary">
+            <LinkButton
+              onClick={() => {
+                dbSubmitScore()
+              }}
+              href="/card"
+              className="w-48 shadow-md"
+              type="secondary"
+            >
               ถัดไป
             </LinkButton>
           </div>

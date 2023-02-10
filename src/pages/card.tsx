@@ -5,9 +5,6 @@ import { useEffect } from "react"
 import { useAuth } from "@/lib/auth"
 
 export default function Card() {
-  const nickname = "username"
-  const flower = "daisy"
-
   const auth = useAuth()
   const router = useRouter()
 

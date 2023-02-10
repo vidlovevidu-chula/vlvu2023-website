@@ -78,6 +78,7 @@ export function ExampleLogin() {
       nickname: "Jo",
       status: "student",
       year: 1,
+      studentId: "123456789",
     })
   }
 

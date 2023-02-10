@@ -1,6 +1,8 @@
 import { User as FirebaseUser } from "firebase/auth"
 import { Estamp } from "./estamp"
 import { createUser as dbCreateUser, getCurrentUserData, getUserRef, updateUser } from "@/lib/db"
+import { deleteField } from "firebase/firestore"
+
 export interface UserCreateBody {
   faculty: string
   name: string
@@ -47,4 +49,8 @@ export const addScore: (credential: FirebaseUser, score: number) => Promise<void
   score: number
 ) => {
   return await updateUser(credential.uid, { score })
+}
+
+export const removeScore: (credential: FirebaseUser) => Promise<void> = async (credential: FirebaseUser) => {
+  return await updateUser(credential.uid, { score: deleteField() })
 }

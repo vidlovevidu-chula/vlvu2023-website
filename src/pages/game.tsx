@@ -27,20 +27,36 @@ export default function Game() {
     auth?.requireUser("/registerform")
   }, [auth])
 
-  if (auth && auth.user && auth.user.score != 0 && page != 28) {
-    setScore(auth.user.score)
-    setPage(28)
+  useEffect(() => {
+    if (auth && auth.user && auth.user.score !== 0 && page !== 28 && auth?.user?.score) {
+      setScore(auth.user.score)
+      setPage(28)
+    }
+  }, [auth, page, score])
+
+  const dbSubmitScore = () => {
+    auth?.addScore(score)
   }
 
-  if (page == 28) {
-    auth?.addScore(score)
+  const resetScore = () => {
+    setScore(0)
+    setPage(0)
+
+    auth?.removeScore()
   }
 
   return (
     <div className={clsx("h-screen overflow-hidden", getBG(page))}>
       <main className="mx-auto h-full relative max-w-lg font-display">
         <AnimationWrapper page={page}>
-          <PageRenderer score={score} page={page} setPage={setPage} setScore={setScore} />
+          <PageRenderer
+            score={score}
+            page={page}
+            setPage={setPage}
+            setScore={setScore}
+            dbSubmitScore={dbSubmitScore}
+            resetScore={resetScore}
+          />
         </AnimationWrapper>
       </main>
     </div>

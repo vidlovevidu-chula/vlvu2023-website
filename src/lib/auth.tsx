@@ -14,6 +14,7 @@ import {
   User,
   UserCreateBody,
   addScore as dbAddScore,
+  removeScore as dbRemoveScore,
   createUser as dbCreateUser,
   getUserDoc,
   getUser,
@@ -31,6 +32,7 @@ export interface IAuthContext {
   createUser: (body: UserCreateBody) => Promise<void>
   addEstamp: (estampId: Estamp) => Promise<void>
   addScore: (score: number) => Promise<void>
+  removeScore: () => Promise<void>
   loading: boolean
   signinWithGoogle: (redirect?: string | undefined) => Promise<void>
   signout: () => void
@@ -140,6 +142,14 @@ function useProvideAuth() {
     await dbAddScore(credential, score)
   }
 
+  const removeScore = async () => {
+    if (!user || !credential) {
+      return
+    }
+
+    await dbRemoveScore(credential)
+  }
+
   const requireCred = (redirect: string) => {
     if (!credential) {
       router.push(redirect)
@@ -173,6 +183,7 @@ function useProvideAuth() {
     signout,
     addEstamp,
     addScore,
+    removeScore,
     requireUser,
     requireCred,
     requireNotCred,

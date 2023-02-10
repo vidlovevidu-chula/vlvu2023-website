@@ -84,8 +84,7 @@ export default function RegisterForm() {
                   placeholder="สถานภาพ"
                   className="w-3/5"
                 />
-                {
-                  values.status == "student" &&
+                {values.status === "student" && (
                   <>
                     <AnimatePresence>
                       {/* seperate motion.div because it count as one flex item so gap does not apply */}
@@ -100,15 +99,18 @@ export default function RegisterForm() {
                       <motion.div key="year-motion" initial={{ y: -20, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
                         <TextField fieldName="year" fieldLabel="ชั้นปี" className="w-1/5" />
                       </motion.div>
-                      {
-                        ["คณะวิศวกรรมศาสตร์", "คณะวิทยาศาสตร์"].includes(values.faculty) &&
-                        <motion.div key="studentId-motion" initial={{ y: -20, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
+                      {["คณะวิศวกรรมศาสตร์", "คณะวิทยาศาสตร์"].includes(values.faculty) && (
+                        <motion.div
+                          key="studentId-motion"
+                          initial={{ y: -20, opacity: 0 }}
+                          animate={{ y: 0, opacity: 1 }}
+                        >
                           <TextField fieldName="studentId" fieldLabel="รหัสนิสิต" />
                         </motion.div>
-                      }
+                      )}
                     </AnimatePresence>
                   </>
-                }
+                )}
 
                 <button type="submit" disabled={isSubmitting || !auth?.credential} className="w-1/6 self-end">
                   ถัดไป

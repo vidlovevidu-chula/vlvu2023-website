@@ -1,6 +1,6 @@
 import clsx from "clsx"
 import Link from "next/link"
-import { ReactNode } from "react"
+import { MouseEvent, MouseEventHandler, ReactNode } from "react"
 
 export function Button({
   type,
@@ -10,7 +10,7 @@ export function Button({
 }: {
   type: "primary" | "secondary" | "white"
   children: ReactNode
-  onClick?: () => void
+  onClick?: MouseEventHandler<HTMLButtonElement>
   className?: string
 }) {
   return (
@@ -36,11 +36,13 @@ export function LinkButton({
   className,
   onMouseOver,
   onMouseLeave,
+  onClick,
 }: {
   type: "primary" | "secondary"
   children: ReactNode
   href: string
   className?: string
+  onClick?: MouseEventHandler<HTMLAnchorElement>
   onMouseOver?: () => void
   onMouseLeave?: () => void
 }) {
@@ -49,6 +51,7 @@ export function LinkButton({
       <a
         onMouseOver={onMouseOver}
         onMouseLeave={onMouseLeave}
+        onClick={onClick}
         className={clsx(
           "py-2 px-14 rounded-2xl transition-colors duration-200 w-[12rem] text-center",
           type === "primary" &&
