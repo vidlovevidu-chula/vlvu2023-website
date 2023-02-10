@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@heroicons/react': ^2.0.15
   '@tailwindcss/typography': ^0.5.2
   '@types/node': ^18.0.0
   '@types/react': 18.0.14
@@ -30,6 +31,7 @@ specifiers:
   typescript: 4.7.4
 
 dependencies:
+  '@heroicons/react': 2.0.15_react@18.2.0
   '@vercel/og': 0.1.0
   chrome-aws-lambda: 10.1.0_puppeteer-core@19.6.3
   clsx: 1.2.1
@@ -1738,6 +1740,14 @@ packages:
       long: 4.0.0
       protobufjs: 7.2.0
       yargs: 16.2.0
+    dev: false
+
+  /@heroicons/react/2.0.15_react@18.2.0:
+    resolution: {integrity: sha512-CZ2dGWgWG3/z5LEoD5D3MEr1syn45JM/OB2aDpw531Ryecgkz2V7TWQ808P0lva7zP003PVW6WlwbofsYyga3A==}
+    peerDependencies:
+      react: '>= 16'
+    dependencies:
+      react: 18.2.0
     dev: false
 
   /@humanwhocodes/config-array/0.9.5:

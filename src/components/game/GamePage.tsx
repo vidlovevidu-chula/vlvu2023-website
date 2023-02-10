@@ -24,6 +24,9 @@ import { flowerDescription, flowerName, getFlowerType } from "@/data/flower"
 import FlowerImg from "@/components/common/FlowerImg"
 import ChoiceButton from "./ChoiceButton"
 
+import ChevronRightIcon from "@heroicons/react/24/solid/ChevronRightIcon"
+import ResetIcon from "@heroicons/react/24/solid/ArrowPathIcon"
+
 const AnimationProps = {
   initial: { opacity: 0 },
   animate: { opacity: 1 },
@@ -807,20 +810,22 @@ export function PageRenderer({
               onClick={() => {
                 resetScore()
               }}
-              className="w-48 shadow-md"
+              className="w-48 px-0 py-3 shadow-md flex gap-1 justify-center items-center"
               type="white"
             >
-              เล่นเกมใหม่
+              <ResetIcon className="h-5 w-5 text-vlvu-pink-600" />
+              <span>เล่นเกมใหม่</span>
             </Button>
             <LinkButton
               onClick={() => {
                 dbSubmitScore()
               }}
               href="/card"
-              className="w-48 shadow-md"
+              className="w-48 px-0 py-3 shadow-md flex gap-1 justify-center items-center"
               type="secondary"
             >
-              ถัดไป
+              <span>ถัดไป</span>
+              <ChevronRightIcon className="h-4 w-4 text-white" />
             </LinkButton>
           </div>
         </div>
