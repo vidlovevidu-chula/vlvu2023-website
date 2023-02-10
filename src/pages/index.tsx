@@ -34,7 +34,7 @@ function WelcomeText() {
       <LinkButton
         href="/register"
         type="primary"
-        className="text-2xl sm:text-lg"
+        className="text-2xl sm:text-lg py-2 px-14"
         onMouseOver={() => {
           setText("Let start !")
         }}

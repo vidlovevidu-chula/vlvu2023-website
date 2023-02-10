@@ -33,7 +33,7 @@ export default function Card() {
             auth?.signout("/")
           }}
           type="white"
-          className="shadow-md w-[10rem] px-0 text-sm flex gap-1 justify-center items-center"
+          className="shadow-md w-[10rem] px-0 py-3 text-sm flex gap-1 justify-center items-center"
         >
           <SignOutIcon className="w-5 h-5 text-vlvu-pink-500" />
           <span>ออกจากระบบ</span>

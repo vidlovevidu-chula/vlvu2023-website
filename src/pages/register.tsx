@@ -25,7 +25,7 @@ export default function Register() {
               onClick={() => {
                 auth?.signinWithGoogle("/registerform")
               }}
-              className="bg-white flex gap-6 px-8 items-center content-start"
+              className="bg-white flex gap-6 px-8 py-3 items-center content-start"
             >
               <GoogleIcon height="32" width="32" className="" />
               <span className="grow text-start text-gray-500 font-semibold">Sign in with Google</span>
