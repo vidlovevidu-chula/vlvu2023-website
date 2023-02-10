@@ -40,18 +40,20 @@ function ChoiceButton({
   points,
   setScore,
   setPage,
+  toPage,
   text,
 }: {
   points: number
   setScore: Dispatch<SetStateAction<number>>
   setPage: Dispatch<SetStateAction<number>>
+  toPage: number
   text: string
 }) {
   return (
     <button
       onClick={() => {
         setScore((score) => score + points)
-        setPage((page) => page + 1)
+        setPage((page) => toPage)
       }}
       className="bg-white text-vlvu-pink-500 shadow-md rounded-xl w-full py-4 font-semibold"
     >
@@ -76,20 +78,14 @@ function PageRenderer({
       return (
         <div>
           {/* tap button */}
-          <button
-            onClick={() => setPage(page + 1)}
-            className="w-64 absolute right-0 bottom-0 opacity-40 hover:opacity-80 transition-opacity"
-          >
+          <button onClick={() => setPage(3)} className="w-64 absolute right-0 bottom-0 transition-opacity">
             <Image layout="responsive" src={tapImg} alt="tap!" />
           </button>
         </div>
       )
     case 1:
       return (
-        <div
-          className="flex flex-col h-full justify-center items-center cursor-pointer"
-          onClick={() => setPage(page + 1)}
-        >
+        <div className="flex flex-col h-full justify-center items-center cursor-pointer" onClick={() => setPage(9)}>
           <p className="font-semibold text-center text-xl">
             ไม่ให้นอนต่อหรอกนะ
             <br />
@@ -103,10 +99,7 @@ function PageRenderer({
       )
     case 2:
       return (
-        <div
-          className="flex flex-col h-full justify-center items-center cursor-pointer"
-          onClick={() => setPage(page + 1)}
-        >
+        <div className="flex flex-col h-full justify-center items-center cursor-pointer" onClick={() => setPage(19)}>
           <p className="font-semibold text-center text-xl">
             แบร่ ! คุณไม่มีสิทธิ์เลือกหรอกนะ
             <br />
@@ -158,7 +151,10 @@ function PageRenderer({
       return (
         <div
           className="flex flex-col h-full justify-center items-center cursor-pointer"
-          onClick={() => setPage(page + 1)}
+          onClick={() => {
+            setPage(page + 1)
+            setTimeout(() => setPage(8), 2500)
+          }}
         >
           <div className="w-64 -mt-6 -mb-6">
             <Image layout="responsive" src={alarmImg} alt="wake up" />
@@ -179,7 +175,7 @@ function PageRenderer({
             key={page}
             className="w-96 h-96 bg-vlvu-pink-100 blur-3xl rounded-full"
           />
-
+          {/* 
           <motion.button
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -190,7 +186,7 @@ function PageRenderer({
             className="w-64 absolute right-0 bottom-0 opacity-40 hover:opacity-80 transition-opacity"
           >
             <Image layout="responsive" src={tapImg} alt="tap!" />
-          </motion.button>
+          </motion.button> */}
         </div>
       )
     case 8:
@@ -210,10 +206,16 @@ function PageRenderer({
           </p>
 
           <div className="flex flex-col gap-2 w-full max-w-sm px-10 relative z-20">
-            <ChoiceButton points={1} text="หยิบมือถือมาเล่น" setScore={setScore} setPage={setPage} />
-            <ChoiceButton points={3} text="ดื่มน้ำสะอาด" setScore={setScore} setPage={setPage} />
-            <ChoiceButton points={4} text="เข้าห้องน้ำล้างหน้า จัดการตัวเอง " setScore={setScore} setPage={setPage} />
-            <ChoiceButton points={2} text="ปิดนาฬิกาปลุก นอนต่อ" setScore={setScore} setPage={setPage} />
+            <ChoiceButton points={1} text="หยิบมือถือมาเล่น" setScore={setScore} setPage={setPage} toPage={9} />
+            <ChoiceButton points={3} text="ดื่มน้ำสะอาด" setScore={setScore} setPage={setPage} toPage={9} />
+            <ChoiceButton
+              points={4}
+              text="เข้าห้องน้ำล้างหน้า จัดการตัวเอง "
+              setScore={setScore}
+              setPage={setPage}
+              toPage={9}
+            />
+            <ChoiceButton points={2} text="ปิดนาฬิกาปลุก นอนต่อ" setScore={setScore} setPage={setPage} toPage={1} />
           </div>
 
           <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-96">
@@ -251,10 +253,34 @@ function PageRenderer({
           </p>
 
           <div className="flex flex-col gap-2 w-full max-w-sm px-10 relative z-20">
-            <ChoiceButton points={1} text="กาแฟ ปลุกความสดชื่นยามเช้า" setScore={setScore} setPage={setPage} />
-            <ChoiceButton points={2} text="น้ำหวาน เพิ่มความกระปรี้กระเปร่า" setScore={setScore} setPage={setPage} />
-            <ChoiceButton points={4} text="น้ำผลไม้ ปลุกความ Healthy" setScore={setScore} setPage={setPage} />
-            <ChoiceButton points={3} text="น้ำเปล่า เพิ่มความชุ่มชื้น" setScore={setScore} setPage={setPage} />
+            <ChoiceButton
+              points={1}
+              text="กาแฟ ปลุกความสดชื่นยามเช้า"
+              setScore={setScore}
+              setPage={setPage}
+              toPage={11}
+            />
+            <ChoiceButton
+              points={2}
+              text="น้ำหวาน เพิ่มความกระปรี้กระเปร่า"
+              setScore={setScore}
+              setPage={setPage}
+              toPage={11}
+            />
+            <ChoiceButton
+              points={4}
+              text="น้ำผลไม้ ปลุกความ Healthy"
+              setScore={setScore}
+              setPage={setPage}
+              toPage={11}
+            />
+            <ChoiceButton
+              points={3}
+              text="น้ำเปล่า เพิ่มความชุ่มชื้น"
+              setScore={setScore}
+              setPage={setPage}
+              toPage={11}
+            />
           </div>
 
           <div className="absolute -bottom-20 left-1/2 -translate-x-1/2 w-96">
@@ -342,10 +368,16 @@ function PageRenderer({
           <p className="font-semibold text-center text-xl relative z-20 mb-6">เลือกหนังที่จะดูจากอะไรดีน้า</p>
 
           <div className="flex flex-col gap-2 w-full max-w-sm px-10 relative z-20">
-            <ChoiceButton points={2} text="นักแสดงคนโปรด" setScore={setScore} setPage={setPage} />
-            <ChoiceButton points={3} text="ผู้กำกับการันตีรางวัล" setScore={setScore} setPage={setPage} />
-            <ChoiceButton points={1} text="แล้วแต่คนรอบข้าง" setScore={setScore} setPage={setPage} />
-            <ChoiceButton points={4} text="อ่านเรื่องย่อแล้วใช่เลย ! !" setScore={setScore} setPage={setPage} />
+            <ChoiceButton points={2} text="นักแสดงคนโปรด" setScore={setScore} setPage={setPage} toPage={14} />
+            <ChoiceButton points={3} text="ผู้กำกับการันตีรางวัล" setScore={setScore} setPage={setPage} toPage={14} />
+            <ChoiceButton points={1} text="แล้วแต่คนรอบข้าง" setScore={setScore} setPage={setPage} toPage={14} />
+            <ChoiceButton
+              points={4}
+              text="อ่านเรื่องย่อแล้วใช่เลย ! !"
+              setScore={setScore}
+              setPage={setPage}
+              toPage={14}
+            />
           </div>
         </motion.div>
       )
@@ -353,7 +385,10 @@ function PageRenderer({
       return (
         <div
           className="flex flex-col h-full justify-center items-center cursor-pointer"
-          onClick={() => setPage(page + 1)}
+          onClick={() => {
+            setPage(page + 1)
+            setTimeout(() => setPage(16), 2500)
+          }}
         >
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96">
             <Image layout="responsive" src={TVImg} alt="tv" />
@@ -375,7 +410,7 @@ function PageRenderer({
             className="w-96 h-96 bg-vlvu-pink-500 blur-3xl rounded-full"
           />
 
-          <motion.button
+          {/* <motion.button
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -385,7 +420,7 @@ function PageRenderer({
             className="w-64 absolute right-0 bottom-0 opacity-40 hover:opacity-80 transition-opacity"
           >
             <Image layout="responsive" src={tapImg} alt="tap!" />
-          </motion.button>
+          </motion.button> */}
         </div>
       )
     case 16:
@@ -430,8 +465,8 @@ function PageRenderer({
           </p>
 
           <div className="flex flex-col gap-2 w-full max-w-sm px-10 relative z-20">
-            <ChoiceButton points={0} text="เอาสิ !" setScore={setScore} setPage={setPage} />
-            <ChoiceButton points={0} text="ไม่เอาอะ" setScore={setScore} setPage={setPage} />
+            <ChoiceButton points={0} text="เอาสิ !" setScore={setScore} setPage={setPage} toPage={19} />
+            <ChoiceButton points={0} text="ไม่เอาอะ" setScore={setScore} setPage={setPage} toPage={2} />
           </div>
         </div>
       )
@@ -462,10 +497,28 @@ function PageRenderer({
           <p className="font-semibold text-center text-xl relative mb-6">คิดว่าเดทแรกควรเป็นอย่างไร</p>
 
           <div className="flex flex-col gap-2 w-full max-w-sm px-10 relative z-20">
-            <ChoiceButton points={2} text="นั่งคาเฟ่ จิบกาแฟยามบ่าย" setScore={setScore} setPage={setPage} />
-            <ChoiceButton points={1} text="เที่ยวแบบธรรมชาติ ชิล ๆ" setScore={setScore} setPage={setPage} />
-            <ChoiceButton points={3} text="นั่งดื่มที่บาร์สักแห่งด้วยกัน" setScore={setScore} setPage={setPage} />
-            <ChoiceButton points={4} text="ดินเนอร์ใต้แสงเทียนสวย ๆ" setScore={setScore} setPage={setPage} />
+            <ChoiceButton
+              points={2}
+              text="นั่งคาเฟ่ จิบกาแฟยามบ่าย"
+              setScore={setScore}
+              setPage={setPage}
+              toPage={21}
+            />
+            <ChoiceButton points={1} text="เที่ยวแบบธรรมชาติ ชิล ๆ" setScore={setScore} setPage={setPage} toPage={21} />
+            <ChoiceButton
+              points={3}
+              text="นั่งดื่มที่บาร์สักแห่งด้วยกัน"
+              setScore={setScore}
+              setPage={setPage}
+              toPage={21}
+            />
+            <ChoiceButton
+              points={4}
+              text="ดินเนอร์ใต้แสงเทียนสวย ๆ"
+              setScore={setScore}
+              setPage={setPage}
+              toPage={21}
+            />
           </div>
         </div>
       )
@@ -529,9 +582,9 @@ function PageRenderer({
           </div>
 
           <div className="flex flex-col gap-2 w-full max-w-sm px-10 relative z-20">
-            <ChoiceButton points={0} text="ไปกับคู่" setScore={setScore} setPage={setPage} />
-            <ChoiceButton points={0} text="ไปหาคู่" setScore={setScore} setPage={setPage} />
-            <ChoiceButton points={0} text="ไปแน่ เจอกัน" setScore={setScore} setPage={setPage} />
+            <ChoiceButton points={0} text="ไปกับคู่" setScore={setScore} setPage={setPage} toPage={22} />
+            <ChoiceButton points={0} text="ไปหาคู่" setScore={setScore} setPage={setPage} toPage={22} />
+            <ChoiceButton points={0} text="ไปแน่ เจอกัน" setScore={setScore} setPage={setPage} toPage={22} />
           </div>
         </div>
       )
@@ -556,10 +609,29 @@ function PageRenderer({
               text="เดินผ่านแบบทำทรง ในใจคือแกอยากได้อะไรเอาไปเลย"
               setScore={setScore}
               setPage={setPage}
+              toPage={23}
             />
-            <ChoiceButton points={1} text="เข้าไปทักทายอย่างร่าเริง" setScore={setScore} setPage={setPage} />
-            <ChoiceButton points={2} text="ส่งสายตาปิ๊ง ๆ เพราะแค่มองตาก็รู้ใจ" setScore={setScore} setPage={setPage} />
-            <ChoiceButton points={3} text="พยายามทำตัวโดดเด่น ให้เค้าสนใจ" setScore={setScore} setPage={setPage} />
+            <ChoiceButton
+              points={1}
+              text="เข้าไปทักทายอย่างร่าเริง"
+              setScore={setScore}
+              setPage={setPage}
+              toPage={23}
+            />
+            <ChoiceButton
+              points={2}
+              text="ส่งสายตาปิ๊ง ๆ เพราะแค่มองตาก็รู้ใจ"
+              setScore={setScore}
+              setPage={setPage}
+              toPage={23}
+            />
+            <ChoiceButton
+              points={3}
+              text="พยายามทำตัวโดดเด่น ให้เค้าสนใจ"
+              setScore={setScore}
+              setPage={setPage}
+              toPage={23}
+            />
           </div>
         </div>
       )
@@ -577,10 +649,16 @@ function PageRenderer({
           </p>
 
           <div className="flex flex-col gap-2 w-full max-w-sm px-10 relative z-20">
-            <ChoiceButton points={3} text="เสียบไว้ในกระเป๋าเสื้อ" setScore={setScore} setPage={setPage} />
-            <ChoiceButton points={1} text="เด็ดดอกไม้แถวนั้นคืนละกัน" setScore={setScore} setPage={setPage} />
-            <ChoiceButton points={4} text="เก็บไปทับเเห้งในหนังสือ" setScore={setScore} setPage={setPage} />
-            <ChoiceButton points={2} text="ถือเล่นอยู่ในมือ" setScore={setScore} setPage={setPage} />
+            <ChoiceButton points={3} text="เสียบไว้ในกระเป๋าเสื้อ" setScore={setScore} setPage={setPage} toPage={24} />
+            <ChoiceButton
+              points={1}
+              text="เด็ดดอกไม้แถวนั้นคืนละกัน"
+              setScore={setScore}
+              setPage={setPage}
+              toPage={24}
+            />
+            <ChoiceButton points={4} text="เก็บไปทับเเห้งในหนังสือ" setScore={setScore} setPage={setPage} toPage={24} />
+            <ChoiceButton points={2} text="ถือเล่นอยู่ในมือ" setScore={setScore} setPage={setPage} toPage={24} />
           </div>
 
           <div className="absolute -bottom-20 left-1/2 -translate-x-1/2 w-96">
@@ -600,10 +678,10 @@ function PageRenderer({
           </p>
 
           <div className="flex flex-col gap-2 w-full max-w-sm px-10 relative z-20">
-            <ChoiceButton points={3} text="ฉลาด เข้ากับคนง่าย" setScore={setScore} setPage={setPage} />
-            <ChoiceButton points={1} text="ใจดี อารมณ์ดี" setScore={setScore} setPage={setPage} />
-            <ChoiceButton points={2} text="อ่อนโยน สุภาพ" setScore={setScore} setPage={setPage} />
-            <ChoiceButton points={4} text="มีความคิด ละเอียดอ่อน " setScore={setScore} setPage={setPage} />
+            <ChoiceButton points={3} text="ฉลาด เข้ากับคนง่าย" setScore={setScore} setPage={setPage} toPage={25} />
+            <ChoiceButton points={1} text="ใจดี อารมณ์ดี" setScore={setScore} setPage={setPage} toPage={25} />
+            <ChoiceButton points={2} text="อ่อนโยน สุภาพ" setScore={setScore} setPage={setPage} toPage={25} />
+            <ChoiceButton points={4} text="มีความคิด ละเอียดอ่อน " setScore={setScore} setPage={setPage} toPage={25} />
           </div>
         </div>
       )
@@ -627,7 +705,10 @@ function PageRenderer({
     case 26:
       return (
         <div
-          onClick={() => setPage((page) => page + 1)}
+          onClick={() => {
+            setPage((page) => page + 1)
+            setTimeout(() => setPage(28), 2500)
+          }}
           className="flex flex-col h-full justify-center items-center cursor-pointer"
         >
           <p className="font-semibold text-center text-xl relative mb-6">
@@ -670,7 +751,7 @@ function PageRenderer({
             className="w-96 h-96 bg-vlvu-pink-100 blur-3xl rounded-full"
           />
 
-          <motion.button
+          {/* <motion.button
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -680,7 +761,7 @@ function PageRenderer({
             className="w-64 absolute right-0 bottom-0 opacity-40 hover:opacity-80 transition-opacity"
           >
             <Image layout="responsive" src={tapImg} alt="tap!" />
-          </motion.button>
+          </motion.button> */}
         </div>
       )
     case 28:
