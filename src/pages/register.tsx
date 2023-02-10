@@ -8,8 +8,8 @@ export default function Register() {
   const auth = useAuth()
 
   useEffect(() => {
-    auth?.requireNotUser("/game")
     auth?.requireNotCred("/registerform")
+    auth?.requireNotUser("/game")
   }, [])
 
   return (

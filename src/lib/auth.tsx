@@ -35,7 +35,7 @@ export interface IAuthContext {
   removeScore: () => Promise<void>
   loading: boolean
   signinWithGoogle: (redirect?: string | undefined) => Promise<void>
-  signout: () => void
+  signout: (redirect?: string) => void
   requireCred: (redirect: string) => void
   requireNotCred: (redirect: string) => void
   requireUser: (redirect: string) => void
@@ -107,10 +107,14 @@ function useProvideAuth() {
     }
   }
 
-  const signout = async () => {
+  const signout = async (redirect?: string) => {
     setLoading(true)
 
     await signOut(auth)
+
+    if (redirect) {
+      router.push(redirect)
+    }
   }
 
   const createUser = async (createBody: UserCreateBody) => {

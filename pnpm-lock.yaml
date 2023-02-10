@@ -1,7 +1,6 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@heroicons/react': ^2.0.14
   '@tailwindcss/typography': ^0.5.2
   '@types/node': ^18.0.0
   '@types/react': 18.0.14
@@ -26,11 +25,11 @@ specifiers:
   puppeteer-core: ^19.6.3
   react: 18.2.0
   react-dom: 18.2.0
+  react-qr-code: ^2.0.11
   tailwindcss: ^3.1.4
   typescript: 4.7.4
 
 dependencies:
-  '@heroicons/react': 2.0.14_react@18.2.0
   '@vercel/og': 0.1.0
   chrome-aws-lambda: 10.1.0_puppeteer-core@19.6.3
   clsx: 1.2.1
@@ -42,6 +41,7 @@ dependencies:
   puppeteer-core: 19.6.3
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
+  react-qr-code: 2.0.11_react@18.2.0
 
 devDependencies:
   '@tailwindcss/typography': 0.5.7_tailwindcss@3.1.8
@@ -1738,14 +1738,6 @@ packages:
       long: 4.0.0
       protobufjs: 7.2.0
       yargs: 16.2.0
-    dev: false
-
-  /@heroicons/react/2.0.14_react@18.2.0:
-    resolution: {integrity: sha512-eFL4if6L7woL1fUvk/jjXx4z9NxVESHHrQnEd2qKVelTFTIr/3VLGWdPb0biia9ZVe26P0JSs/xmOlRNur3SrQ==}
-    peerDependencies:
-      react: '>= 16'
-    dependencies:
-      react: 18.2.0
     dev: false
 
   /@humanwhocodes/config-array/0.9.5:
@@ -4561,7 +4553,6 @@ packages:
       loose-envify: 1.4.0
       object-assign: 4.1.1
       react-is: 16.13.1
-    dev: true
 
   /protobufjs/6.11.3:
     resolution: {integrity: sha512-xL96WDdCZYdU7Slin569tFX712BxsxslWwAfAhCYjQKGTq7dAU91Lomy6nLLhh/dyGhk/YH4TwTSRxTzhuHyZg==}
@@ -4638,6 +4629,10 @@ packages:
       - utf-8-validate
     dev: false
 
+  /qr.js/0.0.0:
+    resolution: {integrity: sha512-c4iYnWb+k2E+vYpRimHqSu575b1/wKl4XFeJGpFmrJQz5I88v9aY2czh7s0w36srfCM1sXgC/xpoJz5dJfq+OQ==}
+    dev: false
+
   /queue-microtask/1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
 
@@ -4667,6 +4662,20 @@ packages:
 
   /react-is/16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
+
+  /react-qr-code/2.0.11_react@18.2.0:
+    resolution: {integrity: sha512-P7mvVM5vk9NjGdHMt4Z0KWeeJYwRAtonHTghZT2r+AASinLUUKQ9wfsGH2lPKsT++gps7hXmaiMGRvwTDEL9OA==}
+    peerDependencies:
+      react: ^16.x || ^17.x || ^18.x
+      react-native-svg: '*'
+    peerDependenciesMeta:
+      react-native-svg:
+        optional: true
+    dependencies:
+      prop-types: 15.8.1
+      qr.js: 0.0.0
+      react: 18.2.0
+    dev: false
 
   /react/18.2.0:
     resolution: {integrity: sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==}

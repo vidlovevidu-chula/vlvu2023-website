@@ -18,7 +18,7 @@ export function Button({
       onClick={onClick}
       className={clsx(
         "py-2 px-14 rounded-2xl transition-colors duration-200",
-        type === "primary" && "bg-vlvu-pink-400 text-vlvu-pink-500 hover:bg-vlvu-pink-500 hover:text-white",
+        type === "primary" && "bg-vlvu-pink-400 text-vlvu-pink-500 hover:bg-vlvu-pink-600 hover:text-white",
         type === "secondary" && "bg-vlvu-pink-500 text-white hover:bg-vlvu-pink-600",
         type === "white" && "bg-white text-vlvu-pink-500 hover:text-vlvu-pink-500 hover:bg-gray-100",
         className
@@ -53,9 +53,9 @@ export function LinkButton({
         onMouseLeave={onMouseLeave}
         onClick={onClick}
         className={clsx(
-          "py-2 px-14 rounded-2xl transition-colors duration-200 w-[12rem] text-center",
+          "py-2 px-14 rounded-2xl transition-colors duration-200 text-center",
           type === "primary" &&
-            "bg-vlvu-pink-400 text-vlvu-pink-500 hover:bg-vlvu-pink-500 hover:text-white hover:{children=value}",
+            "bg-vlvu-pink-400 text-vlvu-pink-500 hover:bg-vlvu-pink-600 hover:text-white hover:{children=value}",
           type === "secondary" && "bg-vlvu-pink-500 text-white hover:bg-vlvu-pink-600",
           className
         )}
