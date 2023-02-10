@@ -9,7 +9,7 @@ import { motion } from "framer-motion"
 import ChevRonLeftIcon from "@heroicons/react/24/solid/ChevronLeftIcon"
 import DownloadIcon from "@heroicons/react/24/solid/ArrowDownTrayIcon"
 import SignOutIcon from "@heroicons/react/24/solid/ArrowLeftOnRectangleIcon"
-import QRCodeIcon from "@heroicons/react/24/solid/QRCodeIcon"
+// import QRCodeIcon from "@heroicons/react/24/solid/QRCodeIcon"
 
 export default function Card() {
   const auth = useAuth()
