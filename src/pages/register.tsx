@@ -1,5 +1,4 @@
 import { Button } from "@/components/common/Button"
-import { Loading } from "@/components/common/Loading"
 import { useAuth } from "@/lib/auth"
 import GoogleIcon from "@/vectors/icons/google"
 import { useEffect } from "react"
@@ -10,6 +9,7 @@ export default function Register() {
   useEffect(() => {
     auth?.requireNotCred("/registerform")
     auth?.requireNotUser("/game")
+    auth?.requireNotGame("/card")
   }, [])
 
   return (

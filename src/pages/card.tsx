@@ -49,6 +49,7 @@ export default function Card() {
   useEffect(() => {
     auth?.requireCred("/register")
     auth?.requireUser("/registerform")
+    auth?.requireGame("/game")
   }, [])
 
   if (!auth?.loading && !auth?.user?.score) {

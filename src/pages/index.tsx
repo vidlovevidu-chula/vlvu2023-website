@@ -18,16 +18,17 @@ function WelcomeText() {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={easeInOut}
-      className="flex flex-col items-center justify-center h-screen gap-6"
+      className="flex flex-col items-center justify-center h-screen gap-6 relative z-30 top-48"
     >
       <div>
-        <h1 className="text-lg text-center text-[32px] h-[39px]">Welcome!</h1>
-        <p className="text-center mt-[7px]">มาตามหาดอกไม้สำหรับคุณกัน</p>
+        <h1 className="text-6xl sm:text-3xl text-center">Welcome!</h1>
+        <p className="text-center text-2xl sm:text-lg mt-[7px]">มาตามหาดอกไม้สำหรับคุณกัน</p>
       </div>
 
       <LinkButton
         href="/register"
         type="primary"
+        className="text-2xl sm:text-lg"
         onMouseOver={() => {
           setText("Let start !")
         }}
@@ -43,55 +44,48 @@ function WelcomeText() {
 
 const variants1 = {
   hidden: {
-    opacity: 0 , 
-    x: "-100%"
+    opacity: 0,
+    x: "-100%",
   },
   visible: {
-    opacity: 1 , 
-    y: "20vh" ,
-    x: "0"
+    opacity: 1,
+    y: "20vh",
+    x: "0",
   },
-  end:{
-
-  }
+  end: {},
 }
 
 const variants2 = {
   hidden: {
-    opacity: 0 , 
-    x: "200%"
+    opacity: 0,
+    x: "200%",
   },
   visible: {
-    opacity: 1 , 
-    y: "12vh" ,
-    x: "62%"
+    opacity: 1,
+    y: "12vh",
+    x: "62%",
   },
-  end:{
-
-  }
+  end: {},
 }
 
 const variants3 = {
   hidden: {
-    opacity: 0 , 
-    x: "200%"
+    opacity: 0,
+    x: "200%",
   },
   visible: {
-    opacity: 1 , 
-    y: "30vh" ,
-    x: "52%"
+    opacity: 1,
+    y: "30vh",
+    x: "52%",
   },
-  end:{
-
-  }
+  end: {},
 }
-
 
 export default function Home() {
   return (
     <DescribeRoute title="Vid Love Vid U" description="Vid Love Vid U">
-      <div className="bg-vlvu-pink-100 font-display min-h-screen w-full font-semibold ">
-        <main className="text-vlvu-pink-500 mx-auto max-w-lg">
+      <div className="bg-vlvu-pink-100 font-display min-h-screen w-full font-semibold overflow-hidden">
+        <main className="text-vlvu-pink-500 mx-auto max-w-lg relative">
           <div>
             <FlyInBackground />
           </div>

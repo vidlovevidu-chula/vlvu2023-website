@@ -39,7 +39,9 @@ export interface IAuthContext {
   requireCred: (redirect: string) => void
   requireNotCred: (redirect: string) => void
   requireUser: (redirect: string) => void
+  requireGame: (redirect: string) => void
   requireNotUser: (redirect: string) => void
+  requireNotGame: (redirect: string) => void
 }
 
 const AuthContext = React.createContext<IAuthContext | null>(null)
@@ -166,6 +168,12 @@ function useProvideAuth() {
     }
   }
 
+  const requireGame = (redirect: string) => {
+    if (!(user?.score ?? 0 > 0)) {
+      router.push(redirect)
+    }
+  }
+
   const requireNotCred = (redirect: string) => {
     if (credential) {
       router.push(redirect)
@@ -174,6 +182,12 @@ function useProvideAuth() {
 
   const requireNotUser = (redirect: string) => {
     if (user) {
+      router.push(redirect)
+    }
+  }
+
+  const requireNotGame = (redirect: string) => {
+    if (user?.score ?? 0 > 0) {
       router.push(redirect)
     }
   }
@@ -190,7 +204,9 @@ function useProvideAuth() {
     removeScore,
     requireUser,
     requireCred,
+    requireGame,
     requireNotCred,
     requireNotUser,
+    requireNotGame,
   }
 }

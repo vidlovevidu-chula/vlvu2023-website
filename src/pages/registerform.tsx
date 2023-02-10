@@ -21,8 +21,9 @@ export default function RegisterForm() {
   }
 
   useEffect(() => {
-    auth.requireCred("/register")
-    auth.requireNotUser("/game")
+    auth?.requireCred("/register")
+    auth?.requireNotUser("/game")
+    auth?.requireNotGame("/card")
   }, [auth])
 
   const handleSubmit = async ({
