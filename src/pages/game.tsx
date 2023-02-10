@@ -13,7 +13,7 @@ import bookImg from "@/images/game/book.gif"
 import flowerImg from "@/images/game/flower.gif"
 import wandImg from "@/images/game/wand.gif"
 
-import { Dispatch, ReactNode, SetStateAction, useCallback, useState } from "react"
+import { Dispatch, ReactNode, SetStateAction, useCallback, useEffect, useState } from "react"
 import clsx from "clsx"
 import { AnimatePresence, motion } from "framer-motion"
 import { Button } from "@/components/common/Button"
@@ -807,8 +807,10 @@ export default function Game() {
     return <Loading />
   }
 
-  auth?.requireCred("/register")
-  auth?.requireUser("/registerform")
+  useEffect(() => {
+    auth?.requireCred("/register")
+    auth?.requireUser("/registerform")
+  }, [])
 
   if (auth && auth.user && auth.user.score != 0 && page != 28) {
     setScore(auth.user.score)

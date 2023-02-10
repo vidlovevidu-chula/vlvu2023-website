@@ -2,16 +2,19 @@ import { Button } from "@/components/common/Button"
 import { Loading } from "@/components/common/Loading"
 import { useAuth } from "@/lib/auth"
 import GoogleIcon from "@/vectors/icons/google"
+import { useEffect } from "react"
 
 export default function Register() {
   const auth = useAuth()
 
-  if(auth?.loading) {
+  if (auth?.loading) {
     return <Loading />
   }
 
-  auth?.requireNotUser("/game")
-  auth?.requireNotCred("/registerform")
+  useEffect(() => {
+    auth?.requireNotUser("/game")
+    auth?.requireNotCred("/registerform")
+  }, [])
 
   return (
     <div className="bg-vlvu-pink-100 font-display min-h-screen w-full">

@@ -15,6 +15,13 @@ export default class Document extends NextDocument {
           <link rel="apple-touch-icon" sizes="180x180" href="/assets/meta/apple-touch-icon.png" />
           <link rel="icon" type="image/png" sizes="32x32" href="/assets/meta/favicon-32x32.png" />
           <link rel="icon" type="image/png" sizes="16x16" href="/assets/meta/favicon-16x16.png" />
+
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+          <link
+            href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;500;600;700;800&display=swap"
+            rel="stylesheet"
+          />
         </Head>
         <body>
           <Main />
