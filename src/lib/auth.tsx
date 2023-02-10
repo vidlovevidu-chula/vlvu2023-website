@@ -21,6 +21,7 @@ import {
 } from "./user"
 import { Estamp } from "./estamp"
 import { onSnapshot } from "firebase/firestore"
+import { Loading } from "@/components/common/Loading"
 
 const auth = getAuth(firebaseApp)
 
@@ -47,6 +48,10 @@ export const useAuth = () => {
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const auth = useProvideAuth()
+
+  if (auth?.loading) {
+    return <Loading />
+  }
 
   return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>
 }

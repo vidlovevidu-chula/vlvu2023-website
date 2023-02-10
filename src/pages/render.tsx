@@ -1,4 +1,4 @@
-import { FlowerType } from "@/@types/flower"
+import { FlowerType } from "@/data/flower"
 import { Ticket } from "@/components/common/Ticket"
 import { useRouter } from "next/router"
 

@@ -7,10 +7,6 @@ import { useEffect } from "react"
 export default function Register() {
   const auth = useAuth()
 
-  if (auth?.loading) {
-    return <Loading />
-  }
-
   useEffect(() => {
     auth?.requireNotUser("/game")
     auth?.requireNotCred("/registerform")

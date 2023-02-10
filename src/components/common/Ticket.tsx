@@ -6,7 +6,8 @@ import forgetMeNotImg from "@/images/flower/forget_me_not.png"
 import roseImg from "@/images/flower/rose.png"
 import sunflowerImg from "@/images/flower/sunflower.png"
 import tulipImg from "@/images/flower/tulip.png"
-import { FlowerType } from "@/@types/flower"
+import { FlowerType } from "@/data/flower"
+import FlowerImg from "./FlowerImg"
 
 export function Ticket({ nickname, flower }: { nickname: string; flower: FlowerType }) {
   return (
@@ -21,11 +22,7 @@ export function Ticket({ nickname, flower }: { nickname: string; flower: FlowerT
       <Image src={ticketBGImg} alt="bg" />
 
       <div style={{ right: "2.25rem", bottom: "4rem" }} className="absolute">
-        {flower === "daisy" && <Image width={100} height={100} src={daisyImg} alt="flower" />}
-        {flower === "forgetMeNot" && <Image width={100} height={100} src={forgetMeNotImg} alt="flower" />}
-        {flower === "rose" && <Image width={100} height={100} src={roseImg} alt="flower" />}
-        {flower === "sunflower" && <Image width={100} height={100} src={sunflowerImg} alt="flower" />}
-        {flower === "tulip" && <Image width={100} height={100} src={tulipImg} alt="flower" />}
+        <FlowerImg type={flower} />
       </div>
     </div>
   )

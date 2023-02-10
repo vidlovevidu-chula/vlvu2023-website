@@ -16,11 +16,13 @@ import wandImg from "@/images/game/wand.gif"
 import { Dispatch, ReactNode, SetStateAction, useCallback, useEffect, useState } from "react"
 import clsx from "clsx"
 import { AnimatePresence, motion } from "framer-motion"
-import { Button } from "@/components/common/Button"
+import { Button, LinkButton } from "@/components/common/Button"
 import { addScore } from "@/lib/user"
 import { useAuth } from "@/lib/auth"
 import { useRouter } from "next/router"
 import { Loading } from "@/components/common/Loading"
+import { flowerDescription, flowerName, getFlowerType } from "@/data/flower"
+import FlowerImg from "@/components/common/FlowerImg"
 
 const AnimationProps = {
   initial: { opacity: 0 },
@@ -766,8 +768,30 @@ function PageRenderer({
       )
     case 28:
       return (
-        <div className="flex flex-col h-full justify-center items-center cursor-pointer">
-          <p>Result!</p>
+        <div className="flex flex-col h-full justify-center items-center">
+          <div className="flex flex-col items-center bg-white bg-opacity-70 shadow-xl rounded-3xl px-8 py-10 max-w-sm">
+            <FlowerImg width={150} height={150} type={getFlowerType(score)} />
+            <h2 className="font-bold text-black text-2xl mb-4 text-center">{flowerName[getFlowerType(score)]}</h2>
+            <p className="text-[#643D4B] text-lg font-normal leading-relaxed">
+              {flowerDescription[getFlowerType(score)]}
+            </p>
+          </div>
+
+          <div className="mt-6 flex gap-2">
+            <Button
+              onClick={() => {
+                setPage(0)
+                setScore(0)
+              }}
+              className="w-48 shadow-md"
+              type="white"
+            >
+              เล่นเกมใหม่
+            </Button>
+            <LinkButton href="/card" className="w-48 shadow-md" type="secondary">
+              ถัดไป
+            </LinkButton>
+          </div>
         </div>
       )
     default:
@@ -803,14 +827,10 @@ export default function Game() {
     [page]
   )
 
-  if (auth?.loading) {
-    return <Loading />
-  }
-
   useEffect(() => {
     auth?.requireCred("/register")
     auth?.requireUser("/registerform")
-  }, [])
+  }, [auth])
 
   if (auth && auth.user && auth.user.score != 0 && page != 28) {
     setScore(auth.user.score)
