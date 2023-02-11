@@ -1,11 +1,11 @@
-# VLVU-Website 💕
+# VLVU Website 💕
 
 An interactive website for Vid Love Vid U, a Valentine's day event. Take a quiz to discover your love personality and collect stamps to win prizes.
 
 Built with:
 
 - [Next.js](https://nextjs.org)
-- [tailwindcss](https://tailwindcss.com)
+- [TailwindCSS](https://tailwindcss.com)
 - [Firebase Authentication](https://firebase.google.com/products/auth) and [Firestore Database](https://firebase.google.com/products/firestore)
 - [@vercel/og](https://vercel.com/docs/concepts/functions/edge-functions/og-image-generation)
 
