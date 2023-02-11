@@ -7,7 +7,7 @@ Built with:
 - [Next.js](https://nextjs.org)
 - [tailwindcss](https://tailwindcss.com)
 - [Firebase Authentication](https://firebase.google.com/products/auth) and [Firestore Database](https://firebase.google.com/products/firestore)
-- [@vercel/og](https://vercel.com/docs/concepts/functions/edge-functions/og-image-generation) for image optimization
+- [@vercel/og](https://vercel.com/docs/concepts/functions/edge-functions/og-image-generation)
 
 Check it out live at [vidlovevidu.com](https://vidlovevidu.com) and follow us on Instagram [@vidlovevidu.chula](https://instagram.com/vidlovevidu.chula) 💕
 
