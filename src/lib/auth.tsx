@@ -16,6 +16,7 @@ import {
   addScore as dbAddScore,
   removeScore as dbRemoveScore,
   createUser as dbCreateUser,
+  addPurpose as dbAddPurpose,
   getUserDoc,
   getUser,
   updateEstamp,
@@ -30,6 +31,7 @@ export interface IAuthContext {
   credential: FirebaseUser | null
   user: User | null
   createUser: (body: UserCreateBody) => Promise<void>
+  addPurpose: (purpose: string) => Promise<void>
   addEstamp: (estampId: Estamp) => Promise<void>
   addScore: (score: number) => Promise<void>
   removeScore: () => Promise<void>
@@ -129,6 +131,14 @@ function useProvideAuth() {
     setUser(user)
   }
 
+  const addPurpose = async (purpose: string) => {
+    if (!user || !credential) {
+      return
+    }
+
+    await dbAddPurpose(credential, purpose)
+  }
+
   const addEstamp = async (estamp: Estamp) => {
     if (!user || !credential) {
       return
@@ -199,6 +209,7 @@ function useProvideAuth() {
     signinWithGoogle,
     signout,
     addEstamp,
+    addPurpose,
     addScore,
     removeScore,
     requireUser,

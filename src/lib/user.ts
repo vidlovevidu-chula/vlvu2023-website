@@ -17,6 +17,9 @@ export interface User extends UserCreateBody {
   estamps: Estamp[]
   redeemed: boolean
   score: number
+  purpose: string
+  estamp1: boolean
+  estamp2: boolean
 }
 
 export const createUser = async (credential: FirebaseUser, createBody: UserCreateBody) => {
@@ -42,6 +45,13 @@ export const updateEstamp: (credential: FirebaseUser, updatedEstamp: Estamp[]) =
   updatedEstamp: Estamp[]
 ) => {
   return await updateUser(credential.uid, { estamps: updatedEstamp })
+}
+
+export const addPurpose: (credential: FirebaseUser, purpose: string) => Promise<void> = async (
+  credential: FirebaseUser,
+  purpose: string
+) => {
+  return await updateUser(credential.uid, { purpose })
 }
 
 export const addScore: (credential: FirebaseUser, score: number) => Promise<void> = async (

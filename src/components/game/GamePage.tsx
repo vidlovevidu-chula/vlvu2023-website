@@ -48,6 +48,7 @@ export function PageRenderer({
   setScore,
   resetScore,
   dbSubmitScore,
+  dbUpdatePurpose,
 }: {
   page: number
   score: number
@@ -55,6 +56,7 @@ export function PageRenderer({
   setScore: Dispatch<SetStateAction<number>>
   resetScore: () => void
   dbSubmitScore: () => void
+  dbUpdatePurpose: (purpose: string) => void
 }) {
   const timeOutRef = useRef<NodeJS.Timeout>()
 
@@ -611,9 +613,30 @@ export function PageRenderer({
           </div>
 
           <div className="flex flex-col gap-2 w-full max-w-sm px-10 relative z-20">
-            <ChoiceButton points={0} text="ไปกับคู่" setScore={setScore} setPage={setPage} toPage={22} />
-            <ChoiceButton points={0} text="ไปหาคู่" setScore={setScore} setPage={setPage} toPage={22} />
-            <ChoiceButton points={0} text="ไปแน่ เจอกัน" setScore={setScore} setPage={setPage} toPage={22} />
+            <ChoiceButton
+              onClick={() => dbUpdatePurpose("ไปกับคู่")}
+              points={0}
+              text="ไปกับคู่"
+              setScore={setScore}
+              setPage={setPage}
+              toPage={22}
+            />
+            <ChoiceButton
+              onClick={() => dbUpdatePurpose("ไปหาคู่")}
+              points={0}
+              text="ไปหาคู่"
+              setScore={setScore}
+              setPage={setPage}
+              toPage={22}
+            />
+            <ChoiceButton
+              onClick={() => dbUpdatePurpose("ไปแน่ เจอกัน")}
+              points={0}
+              text="ไปแน่ เจอกัน"
+              setScore={setScore}
+              setPage={setPage}
+              toPage={22}
+            />
           </div>
         </div>
       )

@@ -40,6 +40,10 @@ export default function Game() {
     auth?.addScore(score)
   }
 
+  const dbUpdatePurpose = (purpose: string) => {
+    auth?.addPurpose(purpose)
+  }
+
   const resetScore = () => {
     auth?.removeScore().then(() => {
       setScore(0)
@@ -54,6 +58,7 @@ export default function Game() {
           <PageRenderer
             score={score}
             page={page}
+            dbUpdatePurpose={dbUpdatePurpose}
             setPage={setPage}
             setScore={setScore}
             dbSubmitScore={dbSubmitScore}
