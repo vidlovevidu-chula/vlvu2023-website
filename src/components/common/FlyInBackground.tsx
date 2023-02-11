@@ -5,7 +5,7 @@ export function FlyInBackground() {
   return (
     <motion.div
       initial={{ opacity: 0, y: "-100vh" }}
-      animate={{ opacity: 1, y: "11vh", x: "18%" }}
+      animate={{ opacity: 1, y: "11vh", x: "10%" }}
       exit={{ opacity: 0 }}
       transition={{ duration: 1 }}
     >

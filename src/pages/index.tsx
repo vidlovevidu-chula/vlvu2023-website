@@ -27,8 +27,8 @@ function WelcomeText() {
       className="flex flex-col items-center justify-center h-screen gap-6 relative z-30 top-48"
     >
       <div>
-        <h1 className="text-6xl sm:text-3xl text-center">Welcome!</h1>
-        <p className="text-center text-2xl sm:text-lg mt-[7px]">มาตามหาดอกไม้สำหรับคุณกัน</p>
+        <h1 className="text-[2.7rem] text-center">Welcome!</h1>
+        <p className="text-center text-[1.2rem] sm:text-lg mt-[7px]">มาตามหาดอกไม้สำหรับคุณกัน</p>
       </div>
 
       <LinkButton
@@ -56,7 +56,7 @@ const variants1 = {
   visible: {
     opacity: 1,
     y: "20vh",
-    x: "0",
+    x: "-10%",
   },
   end: {},
 }
@@ -81,7 +81,7 @@ const variants3 = {
   },
   visible: {
     opacity: 1,
-    y: "30vh",
+    y: "38vh",
     x: "52%",
   },
   end: {},
