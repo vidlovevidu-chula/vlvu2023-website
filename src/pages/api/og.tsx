@@ -8,9 +8,6 @@ export const config = {
 }
 
 const RobotoSlab = fetch(new URL("../../fonts/RobotoSlab-Bold.ttf", import.meta.url)).then((res) => res.arrayBuffer())
-const BGImgSrc = fetch(new URL("../../images/ticket/bg.png", import.meta.url))
-  .then((res) => res.blob())
-  .then((blob) => blob.toString())
 
 const SIZE = 180
 
@@ -36,7 +33,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           tw="text-6xl bg-white font-bold bg-[#FFF2F4] w-full h-full flex flex-col items-center justify-center text-center relative"
         >
           <div tw="absolute flex top-0 left-0">
-            <img alt="bg" height={1300} width={620} src={await BGImgSrc} />
+            <img alt="bg" height={1300} width={620} src={`${url.origin}/assets/bg.png`} />
           </div>
           <div
             style={{

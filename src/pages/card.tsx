@@ -26,7 +26,7 @@ export default function Card() {
   }
 
   return (
-    <div className="bg-vlvu-pink-100 min-h-screen flex flex-col justify-center items-center pt-6 pb-20 font-display">
+    <div className="bg-vlvu-pink-100 min-h-screen flex flex-col justify-center items-center pt-20 sm:pt-6 pb-20 font-display">
       <div className="flex justify-end absolute top-0 w-full z-50 p-6">
         <Button
           onClick={() => {

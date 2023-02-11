@@ -67,7 +67,7 @@ export default function RegisterForm() {
           >
             {({ isSubmitting, values }) => (
               <Form className="flex flex-col gap-3 font-semibold text-vlvu-pink-500 w-full max-w-sm">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 w-full">
                   <p className="text-center">Logged in as {auth?.credential?.email}</p>
 
                   <button
