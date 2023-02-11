@@ -114,6 +114,7 @@ function useProvideAuth() {
     await signOut(auth)
 
     setCredential(null)
+    setUser(null)
 
     if (redirect) {
       router.push(redirect)
