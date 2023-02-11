@@ -4,7 +4,6 @@ import { Formik, Form } from "formik"
 import faculties from "@/data/faculties"
 import { TextField } from "@/components/common/TextField"
 import { SelectField } from "@/components/common/SelectField"
-import { Loading } from "@/components/common/Loading"
 import { useEffect } from "react"
 import { validateForm } from "@/lib/validate"
 import { AnimatePresence, motion } from "framer-motion"
@@ -15,10 +14,6 @@ export default function RegisterForm() {
 
   if (!auth) {
     return
-  }
-
-  if (auth.loading) {
-    return <Loading />
   }
 
   useEffect(() => {
