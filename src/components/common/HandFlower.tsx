@@ -10,7 +10,7 @@ export function HandFlower(){
         transition={easeInOut}
       >
         <div className="absolute">
-          <Image src="/assets/handwithflower.svg" width="400px" height="600px"/>
+          <Image src="/assets/handflower.png" width="300px" height="350px"/>
         </div>
       </motion.div>
     )
