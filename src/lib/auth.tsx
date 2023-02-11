@@ -88,6 +88,8 @@ function useProvideAuth() {
           return
         }
         setUser(user)
+
+        setLoading(false)
       })
     })
 
@@ -95,10 +97,12 @@ function useProvideAuth() {
   }, [])
 
   const signinWithGoogle = async (redirect?: string | undefined) => {
+    setLoading(true)
     const credential = await signInWithPopup(auth, new GoogleAuthProvider())
 
     setCredential(credential.user)
 
+    setLoading(false)
     if (redirect) {
       router.push(redirect)
     }
