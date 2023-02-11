@@ -66,13 +66,14 @@ function useProvideAuth() {
   const [loading, setLoading] = useState(true)
   const router = useRouter()
 
-  const timeoutCancel = setTimeout(() => setLoading(false), 1000)
-
   useEffect(() => {
+    const timeoutCancel = setTimeout(() => setLoading(false), 1000)
+
     const unsubscribe = onAuthStateChanged(auth, (newCredential) => {
       clearTimeout(timeoutCancel)
 
       if (!newCredential || credential) {
+        setLoading(false)
         return
       }
 
@@ -87,8 +88,6 @@ function useProvideAuth() {
           return
         }
         setUser(user)
-
-        setLoading(false)
       })
     })
 
@@ -96,13 +95,9 @@ function useProvideAuth() {
   }, [])
 
   const signinWithGoogle = async (redirect?: string | undefined) => {
-    setLoading(true)
-
     const credential = await signInWithPopup(auth, new GoogleAuthProvider())
 
     setCredential(credential.user)
-
-    setLoading(false)
 
     if (redirect) {
       router.push(redirect)
@@ -110,8 +105,6 @@ function useProvideAuth() {
   }
 
   const signout = async (redirect?: string) => {
-    setLoading(true)
-
     await signOut(auth)
 
     if (redirect) {
