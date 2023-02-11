@@ -9,7 +9,9 @@ export const config = {
 
 const RobotoSlab = fetch(new URL("../../fonts/RobotoSlab-Bold.ttf", import.meta.url)).then((res) => res.arrayBuffer())
 
-const SIZE = 180
+const RATIO = 1.3
+const FLOWER_SIZE = ~~(150 * RATIO)
+const SIZE = ~~(180 * RATIO)
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
@@ -28,43 +30,50 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     return new ImageResponse(
       (
-        <div
-          style={{ fontFamily: "Roboto Slab" }}
-          tw="text-6xl bg-white font-bold bg-[#FFF2F4] w-full h-full flex flex-col items-center justify-center text-center relative"
-        >
-          <div tw="absolute flex top-0 left-0">
-            <img alt="bg" height={1300} width={620} src={`${url.origin}/assets/bg.png`} />
-          </div>
+        <div tw="bg-[#FFF2F4] flex justify-center items-center w-full h-full">
           <div
-            style={{
-              zIndex: "50",
-              top: name.length <= 13 ? 130 : 145,
-              left: "50%",
-              transform: "translateX(-50%)",
-            }}
-            tw="flex absolute"
+            style={{ fontFamily: "Roboto Slab", width: 620 * RATIO, height: 1300 * RATIO }}
+            tw="text-6xl font-bold flex flex-col items-center justify-center text-center relative"
           >
-            <p
+            <div tw="absolute flex top-0 left-0">
+              <img alt="bg" height={1300 * RATIO} width={620 * RATIO} src={`${url.origin}/assets/bg.png`} />
+            </div>
+            <div
               style={{
-                fontSize: name.length <= 13 ? 64 : 36,
+                zIndex: "50",
+                top: name.length <= 13 ? 140 * RATIO : 150 * RATIO,
+                left: "50%",
+                transform: "translateX(-50%)",
               }}
-              tw="text-[#C697C5]"
+              tw="flex absolute"
             >
-              {name.length <= 18 ? name : name.slice(0, 18) + "..."}
-            </p>
-          </div>
-          <div style={{ zIndex: "50", bottom: 90, left: 75 }} tw="flex absolute">
-            <img alt="QR" height={SIZE} src={base64} width={SIZE} />
-          </div>
+              <p
+                style={{
+                  fontSize: name.length <= 13 ? 64 * RATIO : 42 * RATIO,
+                }}
+                tw="text-[#C697C5]"
+              >
+                {name.length <= 18 ? name : name.slice(0, 18) + "..."}
+              </p>
+            </div>
+            <div style={{ zIndex: "50", bottom: 90 * RATIO, left: 75 * RATIO }} tw="flex absolute">
+              <img alt="QR" height={SIZE} src={base64} width={SIZE} />
+            </div>
 
-          <div style={{ zIndex: "50", bottom: 130, right: 90 }} tw="flex absolute">
-            <img alt="flower" height={150} src={`${url.origin}/assets/flower/${type}.png`} width={150} />
+            <div style={{ zIndex: "50", bottom: 130 * RATIO, right: 82.5 * RATIO }} tw="flex absolute">
+              <img
+                alt="flower"
+                height={FLOWER_SIZE * RATIO}
+                src={`${url.origin}/assets/flower/${type}.png`}
+                width={FLOWER_SIZE * RATIO}
+              />
+            </div>
           </div>
         </div>
       ),
       {
-        width: 620,
-        height: 1300,
+        width: 1080,
+        height: 1920,
         fonts: [
           {
             name: "Roboto Slab",
