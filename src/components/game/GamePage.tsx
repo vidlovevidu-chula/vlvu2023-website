@@ -13,7 +13,10 @@ import bookImg from "@/images/game/book.gif"
 import flowerImg from "@/images/game/flower.gif"
 import wandImg from "@/images/game/wand.gif"
 
-import { Dispatch, ReactNode, SetStateAction, useRef } from "react"
+import ESCLogo from "@/images/logo/esc.png"
+import SmoLogo from "@/images/logo/smo.png"
+
+import { Dispatch, ReactNode, SetStateAction, useEffect, useRef } from "react"
 import { motion } from "framer-motion"
 import { Button, LinkButton } from "@/components/common/Button"
 import { addScore } from "@/lib/user"
@@ -21,11 +24,14 @@ import { flowerDescription, flowerName, getFlowerType } from "@/data/flower"
 import FlowerImg from "@/components/common/FlowerImg"
 import ChoiceButton from "./ChoiceButton"
 
+import ChevronRightIcon from "@heroicons/react/24/solid/ChevronRightIcon"
+import ResetIcon from "@heroicons/react/24/solid/ArrowPathIcon"
+
 const AnimationProps = {
   initial: { opacity: 0 },
   animate: { opacity: 1 },
   exit: { opacity: 0 },
-  transition: { duration: 1.75, transition: "easeInOut" },
+  transition: { duration: 0.75, transition: "easeInOut" },
 }
 
 const FlyInProps = {
@@ -42,6 +48,7 @@ export function PageRenderer({
   setScore,
   resetScore,
   dbSubmitScore,
+  dbUpdatePurpose,
 }: {
   page: number
   score: number
@@ -49,20 +56,64 @@ export function PageRenderer({
   setScore: Dispatch<SetStateAction<number>>
   resetScore: () => void
   dbSubmitScore: () => void
+  dbUpdatePurpose: (purpose: string) => void
 }) {
   const timeOutRef = useRef<NodeJS.Timeout>()
 
+  useEffect(() => {
+    if (page === -2 || page === -1 || page === 7 || page === 15 || page === 27) {
+      timeOutRef.current = setTimeout(() => {
+        setPage(page + 1)
+      }, 2000)
+    }
+
+    if (page === 28) {
+      dbSubmitScore()
+    }
+
+    return () => {
+      clearTimeout(timeOutRef.current)
+    }
+  }, [page])
+
   switch (page) {
-    case 0:
+    case -2: {
       return (
-        <div>
+        <div className="flex flex-col h-full justify-center items-center w-full text-white">
+          <p className="font-bold text-xl mb-4 text-center">จัดทำโดย</p>
+
+          <p className="font-semibold text-md text-center">
+            คณะวิทยาศาสตร์ และคณะวิศวกรรมศาสตร์ จุฬาลงกรณ์มหาวิทยาลัย
+            <br />
+            เนื่องในโครงการ Vid Love Vid U 2023
+          </p>
+        </div>
+      )
+    }
+    case -1: {
+      return (
+        <div className="flex flex-col h-full justify-center items-center w-full text-white">
+          <div className="w-full max-w-xs grid grid-cols-2 gap-6">
+            <Image src={ESCLogo} alt="ESC" />
+            <Image src={SmoLogo} alt="Smo" />
+          </div>
+        </div>
+      )
+    }
+    case 0: {
+      return (
+        <div
+          className="flex flex-col h-full justify-center items-center cursor-pointer"
+          onClick={() => setPage((page) => page + 1)}
+        >
           {/* tap button */}
           <button onClick={() => setPage(3)} className="w-64 absolute right-0 bottom-0 transition-opacity">
             <Image layout="responsive" src={tapImg} alt="tap!" />
           </button>
         </div>
       )
-    case 1:
+    }
+    case 1: {
       return (
         <div className="flex flex-col h-full justify-center items-center cursor-pointer" onClick={() => setPage(9)}>
           <p className="font-semibold text-center text-xl">
@@ -76,7 +127,8 @@ export function PageRenderer({
           </div>
         </div>
       )
-    case 2:
+    }
+    case 2: {
       return (
         <div className="flex flex-col h-full justify-center items-center cursor-pointer" onClick={() => setPage(19)}>
           <p className="font-semibold text-center text-xl">
@@ -86,7 +138,8 @@ export function PageRenderer({
           </p>
         </div>
       )
-    case 3:
+    }
+    case 3: {
       return (
         <div
           className="flex flex-col h-full justify-center items-center cursor-pointer"
@@ -99,7 +152,8 @@ export function PageRenderer({
           <p className="font-semibold text-center text-xl">วันนี้เป็นวันหยุดของคุณ</p>
         </div>
       )
-    case 4:
+    }
+    case 4: {
       return (
         <div
           className="flex flex-col h-full justify-center items-center cursor-pointer"
@@ -112,7 +166,8 @@ export function PageRenderer({
           <p className="font-semibold text-center text-xl">คุณกำลังนอนหลับอยู่</p>
         </div>
       )
-    case 5:
+    }
+    case 5: {
       return (
         <div className="flex flex-col h-full justify-center items-center">
           <div className="w-64 -mb-32 -mt-36">
@@ -121,18 +176,18 @@ export function PageRenderer({
 
           <p className="font-semibold text-center text-xl relative">เอาหล่ะ จะปลุกแล้วนะ</p>
 
-          <Button type="white" onClick={() => setPage(page + 1)} className="relative z-10 mt-6">
+          <Button type="white" onClick={() => setPage(page + 1)} className="relative z-10 mt-6 px-6 py-3">
             พร้อมแล้ว
           </Button>
         </div>
       )
-    case 6:
+    }
+    case 6: {
       return (
         <div
           className="flex flex-col h-full justify-center items-center cursor-pointer"
           onClick={() => {
             setPage(page + 1)
-            timeOutRef.current = setTimeout(() => setPage(8), 2500)
           }}
         >
           <div className="w-64 -mt-6 -mb-6">
@@ -140,26 +195,28 @@ export function PageRenderer({
           </div>
         </div>
       )
-    case 7:
+    }
+    case 7: {
       return (
         <div
-          className="flex flex-col h-full justify-center items-center cursor-pointer"
-          onClick={() => {
-            clearTimeout(timeOutRef?.current)
-            setPage(page + 1)
-          }}
+          className="flex flex-col h-full justify-center items-center"
+          // onClick={() => {
+          //   clearTimeout(timeOutRef?.current)
+          //   setPage(page + 1)
+          // }}
         >
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 4 }}
             exit={{ scale: 0 }}
-            transition={{ duration: 2.5, transition: "easeInOut" }}
+            transition={{ duration: 2.25, transition: "easeInOut" }}
             key={page}
             className="w-96 h-96 bg-vlvu-pink-100 blur-3xl rounded-full"
           />
         </div>
       )
-    case 8:
+    }
+    case 8: {
       return (
         <motion.div
           {...FlyInProps}
@@ -193,7 +250,8 @@ export function PageRenderer({
           </div>
         </motion.div>
       )
-    case 9:
+    }
+    case 9: {
       return (
         <div
           className="flex flex-col h-full justify-center items-center cursor-pointer"
@@ -210,7 +268,8 @@ export function PageRenderer({
           </div>
         </div>
       )
-    case 10:
+    }
+    case 10: {
       return (
         <motion.div
           {...FlyInProps}
@@ -258,7 +317,8 @@ export function PageRenderer({
           </div>
         </motion.div>
       )
-    case 11:
+    }
+    case 11: {
       return (
         <div
           className="flex flex-col h-full justify-center items-center cursor-pointer"
@@ -269,7 +329,8 @@ export function PageRenderer({
           </div>
         </div>
       )
-    case 12:
+    }
+    case 12: {
       return (
         <div
           className="flex flex-col h-full justify-center items-center cursor-pointer"
@@ -328,7 +389,8 @@ export function PageRenderer({
           </div>
         </div>
       )
-    case 13:
+    }
+    case 13: {
       return (
         <motion.div
           {...FlyInProps}
@@ -351,13 +413,14 @@ export function PageRenderer({
           </div>
         </motion.div>
       )
-    case 14:
+    }
+    case 14: {
       return (
         <div
           className="flex flex-col h-full justify-center items-center cursor-pointer"
           onClick={() => {
             setPage(page + 1)
-            timeOutRef.current = setTimeout(() => setPage(16), 2500)
+            // timeOutRef.current = setTimeout(() => setPage(16), 2500)
           }}
         >
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96">
@@ -365,26 +428,28 @@ export function PageRenderer({
           </div>
         </div>
       )
-    case 15:
+    }
+    case 15: {
       return (
         <div
-          className="flex flex-col h-full justify-center items-center cursor-pointer"
-          onClick={() => {
-            clearTimeout(timeOutRef?.current)
-            setPage(page + 1)
-          }}
+          className="flex flex-col h-full justify-center items-center"
+          // onClick={() => {
+          //   clearTimeout(timeOutRef?.current)
+          //   setPage(page + 1)
+          // }}
         >
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 4 }}
             exit={{ scale: 0 }}
-            transition={{ duration: 2.5, transition: "easeInOut" }}
+            transition={{ duration: 2.25, transition: "easeInOut" }}
             key={page}
             className="w-96 h-96 bg-vlvu-pink-500 blur-3xl rounded-full"
           />
         </div>
       )
-    case 16:
+    }
+    case 16: {
       return (
         <div
           className="flex flex-col h-full justify-center items-center cursor-pointer"
@@ -403,7 +468,8 @@ export function PageRenderer({
           </p>
         </div>
       )
-    case 17:
+    }
+    case 17: {
       return (
         <div
           className="flex flex-col h-full justify-center items-center cursor-pointer"
@@ -412,7 +478,8 @@ export function PageRenderer({
           <p className="font-semibold text-center text-xl">อืม... เอาเป็นเรื่องอะไรดีนะ</p>
         </div>
       )
-    case 18:
+    }
+    case 18: {
       return (
         <div className="flex flex-col h-full justify-center items-center">
           <div className="w-64 -mb-32 -mt-36">
@@ -431,7 +498,8 @@ export function PageRenderer({
           </div>
         </div>
       )
-    case 19:
+    }
+    case 19: {
       return (
         <div
           className="flex flex-col h-full justify-center items-center cursor-pointer"
@@ -448,7 +516,8 @@ export function PageRenderer({
           </div>
         </div>
       )
-    case 20:
+    }
+    case 20: {
       return (
         <div className="flex flex-col h-full justify-center items-center">
           <div className="w-64 -mb-32 -mt-36">
@@ -483,7 +552,8 @@ export function PageRenderer({
           </div>
         </div>
       )
-    case 21:
+    }
+    case 21: {
       return (
         <div className="flex flex-col h-full justify-center items-center">
           <p className="font-semibold text-center text-xl relative mb-6">
@@ -543,13 +613,35 @@ export function PageRenderer({
           </div>
 
           <div className="flex flex-col gap-2 w-full max-w-sm px-10 relative z-20">
-            <ChoiceButton points={0} text="ไปกับคู่" setScore={setScore} setPage={setPage} toPage={22} />
-            <ChoiceButton points={0} text="ไปหาคู่" setScore={setScore} setPage={setPage} toPage={22} />
-            <ChoiceButton points={0} text="ไปแน่ เจอกัน" setScore={setScore} setPage={setPage} toPage={22} />
+            <ChoiceButton
+              onClick={() => dbUpdatePurpose("ไปกับคู่")}
+              points={0}
+              text="ไปกับคู่"
+              setScore={setScore}
+              setPage={setPage}
+              toPage={22}
+            />
+            <ChoiceButton
+              onClick={() => dbUpdatePurpose("ไปหาคู่")}
+              points={0}
+              text="ไปหาคู่"
+              setScore={setScore}
+              setPage={setPage}
+              toPage={22}
+            />
+            <ChoiceButton
+              onClick={() => dbUpdatePurpose("ไปแน่ เจอกัน")}
+              points={0}
+              text="ไปแน่ เจอกัน"
+              setScore={setScore}
+              setPage={setPage}
+              toPage={22}
+            />
           </div>
         </div>
       )
-    case 22:
+    }
+    case 22: {
       return (
         <div className="flex flex-col h-full justify-center items-center">
           <div className="w-64 -mb-32 -mt-36">
@@ -557,7 +649,7 @@ export function PageRenderer({
           </div>
 
           <p className="font-semibold text-center text-xl relative mb-6">
-            อุ้ย ๆ ละถ้าสมมตจิว่า
+            อุ้ย ๆ ละถ้าสมมุติว่า
             <br />
             บังเอิญเจอคนที่แอบชอบในงาน
             <br />
@@ -596,7 +688,8 @@ export function PageRenderer({
           </div>
         </div>
       )
-    case 23:
+    }
+    case 23: {
       return (
         <motion.div
           {...FlyInProps}
@@ -627,7 +720,8 @@ export function PageRenderer({
           </div>
         </motion.div>
       )
-    case 24:
+    }
+    case 24: {
       return (
         <div className="flex flex-col h-full justify-center items-center">
           <p className="font-semibold text-center text-xl relative mb-6">
@@ -646,7 +740,8 @@ export function PageRenderer({
           </div>
         </div>
       )
-    case 25:
+    }
+    case 25: {
       return (
         <div
           onClick={() => setPage((page) => page + 1)}
@@ -663,15 +758,15 @@ export function PageRenderer({
           </p>
         </div>
       )
-    case 26:
+    }
+    case 26: {
       return (
         <div
           onClick={() => {
             setPage((page) => page + 1)
-            timeOutRef.current = setTimeout(() => {
-              dbSubmitScore()
-              setPage(28)
-            }, 2500)
+            // timeOutRef.current = setTimeout(() => {
+            //   setPage(28)
+            // }, 2500)
           }}
           className="flex flex-col h-full justify-center items-center cursor-pointer"
         >
@@ -688,7 +783,7 @@ export function PageRenderer({
             <br />
             ไม่ว่าเธอจะเป็นใคร ขอให้สิ่งที่เธอหวัง
             <br />
-            สิ่งที่เธอปราถนาเป็นจริง
+            สิ่งที่เธอปรารถนาเป็นจริง
             <br />.
             <br />.
             <br />.
@@ -700,27 +795,29 @@ export function PageRenderer({
           </p>
         </div>
       )
-    case 27:
+    }
+    case 27: {
       return (
         <div
-          className="flex flex-col h-full justify-center items-center cursor-pointer"
-          onClick={() => {
-            clearTimeout(timeOutRef?.current)
-            dbSubmitScore()
-            setPage(page + 1)
-          }}
+          className="flex flex-col h-full justify-center items-center"
+          // onClick={() => {
+          //   clearTimeout(timeOutRef?.current)
+          //   dbSubmitScore()
+          //   setPage(page + 1)
+          // }}
         >
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 4 }}
             exit={{ scale: 0 }}
-            transition={{ duration: 2.5, transition: "easeInOut" }}
+            transition={{ duration: 2.25, transition: "easeInOut" }}
             key={page}
             className="w-96 h-96 bg-vlvu-pink-100 blur-3xl rounded-full"
           />
         </div>
       )
-    case 28:
+    }
+    case 28: {
       return (
         <div className="flex flex-col h-full justify-center items-center">
           <div className="flex flex-col items-center bg-white bg-opacity-70 shadow-xl rounded-3xl px-8 py-10 max-w-sm">
@@ -736,26 +833,30 @@ export function PageRenderer({
               onClick={() => {
                 resetScore()
               }}
-              className="w-48 shadow-md"
+              className="w-48 px-0 py-3 shadow-md flex gap-1 justify-center items-center"
               type="white"
             >
-              เล่นเกมใหม่
+              <ResetIcon className="h-5 w-5 text-vlvu-pink-600" />
+              <span>เล่นเกมใหม่</span>
             </Button>
             <LinkButton
               onClick={() => {
                 dbSubmitScore()
               }}
               href="/card"
-              className="w-48 shadow-md"
+              className="w-48 px-0 py-3 shadow-md flex gap-1 justify-center items-center"
               type="secondary"
             >
-              ถัดไป
+              <span>ถัดไป</span>
+              <ChevronRightIcon className="h-4 w-4 text-white" />
             </LinkButton>
           </div>
         </div>
       )
-    default:
+    }
+    default: {
       return null
+    }
   }
 }
 

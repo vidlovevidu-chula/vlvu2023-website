@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext, ReactNode, Dispatch, SetStateAction } from "react"
-import Router, { useRouter } from "next/router"
+import React, { useState, useEffect, useContext, ReactNode } from "react"
+import { useRouter } from "next/router"
 
 import {
   getAuth,
@@ -16,11 +16,12 @@ import {
   addScore as dbAddScore,
   removeScore as dbRemoveScore,
   createUser as dbCreateUser,
+  addPurpose as dbAddPurpose,
   getUserDoc,
   getUser,
-  updateEstamp,
+  addPrizeStamp as dbAddPrizeStamp,
+  addFortuneStamp as dbAddFortuneStamp,
 } from "./user"
-import { Estamp } from "./estamp"
 import { onSnapshot } from "firebase/firestore"
 import { Loading } from "@/components/common/Loading"
 
@@ -30,16 +31,20 @@ export interface IAuthContext {
   credential: FirebaseUser | null
   user: User | null
   createUser: (body: UserCreateBody) => Promise<void>
-  addEstamp: (estampId: Estamp) => Promise<void>
+  addPurpose: (purpose: string) => Promise<void>
   addScore: (score: number) => Promise<void>
   removeScore: () => Promise<void>
   loading: boolean
+  addPrizeStamp: () => Promise<void>
+  addFortuneStamp: () => Promise<void>
   signinWithGoogle: (redirect?: string | undefined) => Promise<void>
-  signout: () => void
+  signout: (redirect?: string) => void
   requireCred: (redirect: string) => void
   requireNotCred: (redirect: string) => void
   requireUser: (redirect: string) => void
+  requireGame: (redirect: string) => void
   requireNotUser: (redirect: string) => void
+  requireNotGame: (redirect: string) => void
 }
 
 const AuthContext = React.createContext<IAuthContext | null>(null)
@@ -64,13 +69,14 @@ function useProvideAuth() {
   const [loading, setLoading] = useState(true)
   const router = useRouter()
 
-  const timeoutCancel = setTimeout(() => setLoading(false), 1000)
-
   useEffect(() => {
+    const credTimeoutCancel = setTimeout(() => setLoading(false), 1000)
+
     const unsubscribe = onAuthStateChanged(auth, (newCredential) => {
-      clearTimeout(timeoutCancel)
+      clearTimeout(credTimeoutCancel)
 
       if (!newCredential || credential) {
+        setLoading(false)
         return
       }
 
@@ -82,10 +88,10 @@ function useProvideAuth() {
 
       getUser(newCredential).then((user) => {
         if (!user) {
+          setLoading(false)
           return
         }
         setUser(user)
-
         setLoading(false)
       })
     })
@@ -95,22 +101,25 @@ function useProvideAuth() {
 
   const signinWithGoogle = async (redirect?: string | undefined) => {
     setLoading(true)
-
     const credential = await signInWithPopup(auth, new GoogleAuthProvider())
 
     setCredential(credential.user)
 
     setLoading(false)
-
     if (redirect) {
       router.push(redirect)
     }
   }
 
-  const signout = async () => {
-    setLoading(true)
-
+  const signout = async (redirect?: string) => {
     await signOut(auth)
+
+    setCredential(null)
+    setUser(null)
+
+    if (redirect) {
+      router.push(redirect)
+    }
   }
 
   const createUser = async (createBody: UserCreateBody) => {
@@ -124,14 +133,28 @@ function useProvideAuth() {
     setUser(user)
   }
 
-  const addEstamp = async (estamp: Estamp) => {
+  const addPurpose = async (purpose: string) => {
     if (!user || !credential) {
       return
     }
 
-    user.estamps.push(estamp)
+    await dbAddPurpose(credential, purpose)
+  }
 
-    await updateEstamp(credential, user.estamps)
+  const addPrizeStamp = async () => {
+    if (!user || !credential) {
+      return
+    }
+
+    await dbAddPrizeStamp(credential)
+  }
+
+  const addFortuneStamp = async () => {
+    if (!user || !credential) {
+      return
+    }
+
+    await dbAddFortuneStamp(credential)
   }
 
   const addScore = async (score: number) => {
@@ -162,6 +185,12 @@ function useProvideAuth() {
     }
   }
 
+  const requireGame = (redirect: string) => {
+    if (!(user?.score ?? 0 > 0)) {
+      router.push(redirect)
+    }
+  }
+
   const requireNotCred = (redirect: string) => {
     if (credential) {
       router.push(redirect)
@@ -174,6 +203,12 @@ function useProvideAuth() {
     }
   }
 
+  const requireNotGame = (redirect: string) => {
+    if (user?.score ?? 0 > 0) {
+      router.push(redirect)
+    }
+  }
+
   return {
     user,
     credential,
@@ -181,12 +216,16 @@ function useProvideAuth() {
     createUser,
     signinWithGoogle,
     signout,
-    addEstamp,
+    addPurpose,
+    addPrizeStamp,
+    addFortuneStamp,
     addScore,
     removeScore,
     requireUser,
     requireCred,
+    requireGame,
     requireNotCred,
     requireNotUser,
+    requireNotGame,
   }
 }

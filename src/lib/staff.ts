@@ -1,5 +1,4 @@
-import { getCurrentUserData, getEstamps, updateUser } from "@/lib/db"
-import { getEstampCount } from "./estamp"
+import { getCurrentUserData, updateUser } from "@/lib/db"
 
 export enum RedeemError {
   UserNotFound,
@@ -11,7 +10,7 @@ export enum RedeemError {
  * @description must login with staff account
  * @returns return null if sucess else RedeemError
  */
-export const redeem: (userId: string) => Promise<null | RedeemError> = async (userId: string) => {
+export const redeemPrize: (userId: string) => Promise<null | RedeemError> = async (userId: string) => {
   const user = await getCurrentUserData(userId)
 
   if (!user) {
@@ -19,18 +18,38 @@ export const redeem: (userId: string) => Promise<null | RedeemError> = async (us
   }
 
   // check if user already redeemed
-  if (user.redeemed) {
+  if (user.prizeRedeemed) {
     return RedeemError.AlreadyRedeem
   }
 
   // check if user is qualified for redeem (have all stamp)
-  const stampCount = await getEstampCount()
-
-  if (user.stamps < stampCount) {
+  if (user.prizeStamp) {
     return RedeemError.MissingStamp
   }
 
-  await updateUser(userId, { redeemed: true })
+  await updateUser(userId, { prizeRedeemed: true })
+
+  return null
+}
+
+export const redeemFortune: (userId: string) => Promise<null | RedeemError> = async (userId: string) => {
+  const user = await getCurrentUserData(userId)
+
+  if (!user) {
+    return RedeemError.UserNotFound
+  }
+
+  // check if user already redeemed
+  if (user.PrizeRedeemed) {
+    return RedeemError.AlreadyRedeem
+  }
+
+  // check if user is qualified for redeem (have all stamp)
+  if (user.PrizeStamp) {
+    return RedeemError.MissingStamp
+  }
+
+  await updateUser(userId, { PrizeRedeemed: true })
 
   return null
 }

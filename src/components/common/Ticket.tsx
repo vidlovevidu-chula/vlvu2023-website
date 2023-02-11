@@ -1,20 +1,23 @@
 import ticketBGImg from "@/images/ticket/bg.svg"
 import Image from "next/image"
 
-import daisyImg from "@/images/flower/daisy.png"
-import forgetMeNotImg from "@/images/flower/forget_me_not.png"
-import roseImg from "@/images/flower/rose.png"
-import sunflowerImg from "@/images/flower/sunflower.png"
-import tulipImg from "@/images/flower/tulip.png"
 import { FlowerType } from "@/data/flower"
 import FlowerImg from "./FlowerImg"
 
-export function Ticket({ nickname, flower }: { nickname: string; flower: FlowerType }) {
+import QRCode from "react-qr-code"
+
+export function Ticket({ nickname, flower, uid }: { nickname: string; flower: FlowerType; uid: string }) {
   return (
     <div className="relative">
-      <div style={{ top: "5.5rem" }} className="absolute left-1/2 -translate-x-1/2 z-20">
-        <p style={{ width: "15rem" }} className="text-vlvu-pink-600 font-bold font-name text-4xl text-center">
-          {nickname}
+      <div
+        style={{ top: nickname.length <= 13 ? "5.65rem" : "5.8rem" }}
+        className="absolute left-1/2 -translate-x-1/2 z-20"
+      >
+        <p
+          style={{ width: "15rem", fontSize: nickname.length <= 13 ? "1.9rem" : "1.45rem", lineHeight: "2.5rem" }}
+          className="text-[#C697C5] font-bold font-name text-center"
+        >
+          {nickname.length <= 18 ? nickname : nickname.slice(0, 18) + "..."}
         </p>
       </div>
 
@@ -23,6 +26,15 @@ export function Ticket({ nickname, flower }: { nickname: string; flower: FlowerT
 
       <div style={{ right: "2.25rem", bottom: "4rem" }} className="absolute">
         <FlowerImg type={flower} />
+      </div>
+
+      <div style={{ left: "2.5rem", bottom: "4rem" }} className="absolute">
+        <QRCode
+          size={80}
+          style={{ height: "auto", maxWidth: "100%", width: "100%" }}
+          value={uid}
+          viewBox={`0 0 256 256`}
+        />
       </div>
     </div>
   )
