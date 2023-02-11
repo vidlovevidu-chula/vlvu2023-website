@@ -1,6 +1,5 @@
 import { ImageResponse } from "@vercel/og"
 import { NextApiRequest, NextApiResponse } from "next"
-import { useEffect } from "react"
 
 const qrcode = require("yaqrcode")
 
@@ -11,7 +10,7 @@ export const config = {
 const RobotoSlab = fetch(new URL("../../fonts/RobotoSlab-Bold.ttf", import.meta.url)).then((res) => res.arrayBuffer())
 const BGImgSrc = fetch(new URL("../../images/ticket/bg.png", import.meta.url))
   .then((res) => res.blob())
-  .then((blob) => URL.createObjectURL(blob))
+  .then((blob) => blob.toString())
 
 const SIZE = 180
 
@@ -63,13 +62,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
           <div style={{ zIndex: "50", bottom: 130, right: 90 }} tw="flex absolute">
             <img alt="flower" height={150} src={`${url.origin}/assets/flower/${type}.png`} width={150} />
-            {/* {type === "daisy" && <img alt="daisy" height={150} src={await daisyImgSrc} width={150} />}
-          {type === "forget_me_not" && (
-            <img alt="forget_me_not" height={150} src={await forgetMeNotImgSrc} width={150} />
-          )}
-          {type === "rose" && <img alt="rose" height={150} src={await roseImgSrc} width={150} />}
-          {type === "sunflower" && <img alt="sunflower" height={150} src={await sunflowerImgSrc} width={150} />}
-          {type === "tulip" && <img alt="tulip" height={150} src={await tulipImgSrc} width={150} />} */}
           </div>
         </div>
       ),
@@ -93,8 +85,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
     )
   } catch (e: any) {
-    console.error(`${e.message}`)
-    return new Response(`Failed to generate the image`, {
+    console.error(`ERROR : ${e.message}`)
+    return new Response(`Failed to generate the image:\n${e.message}`, {
       status: 500,
     })
   }

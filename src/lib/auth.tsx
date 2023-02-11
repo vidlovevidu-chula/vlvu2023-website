@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext, ReactNode, Dispatch, SetStateAction } from "react"
-import Router, { useRouter } from "next/router"
+import React, { useState, useEffect, useContext, ReactNode } from "react"
+import { useRouter } from "next/router"
 
 import {
   getAuth,
@@ -19,9 +19,9 @@ import {
   addPurpose as dbAddPurpose,
   getUserDoc,
   getUser,
-  updateEstamp,
+  addPrizeStamp as dbAddPrizeStamp,
+  addFortuneStamp as dbAddFortuneStamp,
 } from "./user"
-import { Estamp } from "./estamp"
 import { onSnapshot } from "firebase/firestore"
 import { Loading } from "@/components/common/Loading"
 
@@ -32,10 +32,11 @@ export interface IAuthContext {
   user: User | null
   createUser: (body: UserCreateBody) => Promise<void>
   addPurpose: (purpose: string) => Promise<void>
-  addEstamp: (estampId: Estamp) => Promise<void>
   addScore: (score: number) => Promise<void>
   removeScore: () => Promise<void>
   loading: boolean
+  addPrizeStamp: () => Promise<void>
+  addFortuneStamp: () => Promise<void>
   signinWithGoogle: (redirect?: string | undefined) => Promise<void>
   signout: (redirect?: string) => void
   requireCred: (redirect: string) => void
@@ -69,10 +70,10 @@ function useProvideAuth() {
   const router = useRouter()
 
   useEffect(() => {
-    const timeoutCancel = setTimeout(() => setLoading(false), 1000)
+    const credTimeoutCancel = setTimeout(() => setLoading(false), 1000)
 
     const unsubscribe = onAuthStateChanged(auth, (newCredential) => {
-      clearTimeout(timeoutCancel)
+      clearTimeout(credTimeoutCancel)
 
       if (!newCredential || credential) {
         setLoading(false)
@@ -87,10 +88,10 @@ function useProvideAuth() {
 
       getUser(newCredential).then((user) => {
         if (!user) {
+          setLoading(false)
           return
         }
         setUser(user)
-
         setLoading(false)
       })
     })
@@ -140,14 +141,20 @@ function useProvideAuth() {
     await dbAddPurpose(credential, purpose)
   }
 
-  const addEstamp = async (estamp: Estamp) => {
+  const addPrizeStamp = async () => {
     if (!user || !credential) {
       return
     }
 
-    user.estamps.push(estamp)
+    await dbAddPrizeStamp(credential)
+  }
 
-    await updateEstamp(credential, user.estamps)
+  const addFortuneStamp = async () => {
+    if (!user || !credential) {
+      return
+    }
+
+    await dbAddFortuneStamp(credential)
   }
 
   const addScore = async (score: number) => {
@@ -209,8 +216,9 @@ function useProvideAuth() {
     createUser,
     signinWithGoogle,
     signout,
-    addEstamp,
     addPurpose,
+    addPrizeStamp,
+    addFortuneStamp,
     addScore,
     removeScore,
     requireUser,
