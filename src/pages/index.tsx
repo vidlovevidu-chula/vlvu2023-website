@@ -91,19 +91,17 @@ const variants3 = {
 
 export default function Home() {
   return (
-    <DescribeRoute title="Vid Love Vid U" description="Vid Love Vid U">
-      <div className="bg-vlvu-pink-100 font-display min-h-screen w-full font-semibold overflow-hidden">
-        <main className="text-vlvu-pink-500 mx-auto max-w-lg relative">
-          <div>
-            <FlyInBackground />
-          </div>
-          <HandFlower />
-          <Cloud variants={variants1}></Cloud>
-          <Cloud variants={variants2}></Cloud>
-          <Cloud variants={variants3}></Cloud>
-          <WelcomeText />
-        </main>
-      </div>
-    </DescribeRoute>
+    <div className="bg-vlvu-pink-100 font-display min-h-screen w-full font-semibold overflow-hidden">
+      <main className="text-vlvu-pink-500 mx-auto max-w-lg relative">
+        <div>
+          <FlyInBackground />
+        </div>
+        <HandFlower />
+        <Cloud variants={variants1}></Cloud>
+        <Cloud variants={variants2}></Cloud>
+        <Cloud variants={variants3}></Cloud>
+        <WelcomeText />
+      </main>
+    </div>
   )
 }
