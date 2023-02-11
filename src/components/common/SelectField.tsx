@@ -24,6 +24,7 @@ export const SelectField = ({
           as="select"
           name={fieldName}
           className={clsx("rounded-lg relative shadow-sm w-full h-[40px] appearance-none p-2 bg-red")}
+          defaultValue=""
         >
           {placeholder && (
             <option className="disabled:text-vlvu-pink-400" value="" selected disabled hidden>

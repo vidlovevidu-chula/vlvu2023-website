@@ -111,6 +111,8 @@ function useProvideAuth() {
   const signout = async (redirect?: string) => {
     await signOut(auth)
 
+    setCredential(null)
+
     if (redirect) {
       router.push(redirect)
     }
