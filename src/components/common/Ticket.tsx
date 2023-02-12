@@ -33,7 +33,7 @@ export function Ticket({ nickname, flower, uid }: { nickname: string; flower: Fl
           size={80}
           style={{ height: "auto", maxWidth: "100%", width: "100%" }}
           value={uid}
-          viewBox={`0 0 256 256`}
+          viewBox={`0 0 80 80`}
         />
       </div>
     </div>
