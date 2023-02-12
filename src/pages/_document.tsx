@@ -15,6 +15,19 @@ export default class Document extends NextDocument {
           <link rel="apple-touch-icon" sizes="180x180" href="/assets/meta/apple-touch-icon.png" />
           <link rel="icon" type="image/png" sizes="32x32" href="/assets/meta/favicon-32x32.png" />
           <link rel="icon" type="image/png" sizes="16x16" href="/assets/meta/favicon-16x16.png" />
+          <script async src="https://www.googletagmanager.com/gtag/js?id=G-NKCB853XT4"></script>
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-NKCB853XT4', {
+              page_path: window.location.pathname,
+            });
+          `,
+            }}
+          />
         </Head>
         <body>
           <Main />
