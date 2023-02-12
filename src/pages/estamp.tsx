@@ -8,6 +8,7 @@ import Image from "next/image"
 import EStamp1Src from "@/images/estamp/1.png"
 import EStamp2Src from "@/images/estamp/2.png"
 import clsx from "clsx"
+import QrCodeIcon from "@heroicons/react/24/solid/QrCodeIcon"
 
 export default function EStampPage() {
   const auth = useAuth()
@@ -20,7 +21,7 @@ export default function EStampPage() {
 
   return (
     <div className="min-h-screen w-full h-full py-12 bg-vlvu-pink-100 text-vlvu-pink-600 font-display">
-      <div className="flex flex-col items-center w-full max-w-lg px-6 mx-auto gap-6">
+      <section className="flex flex-col items-center w-full max-w-lg px-6 mx-auto gap-6">
         <LinkButton type="white" className="flex items-center justify-center w-48 py-3 shadow-md" href="/card">
           <ChevRonLeftIcon className="w-5 h-5 text-vlvu-pink-500" />
 
@@ -49,7 +50,18 @@ export default function EStampPage() {
             </div>
           </div>
         </div>
-      </div>
+
+        <section className="flex flex-col gap-2 max-w-xs w-full mt-4">
+          <LinkButton
+            href="/estamp"
+            type="secondary"
+            className="shadow-md px-0 py-3 w-full flex gap-1 justify-center items-center"
+          >
+            <QrCodeIcon className="w-5 h-5 text-white" />
+            <span>สแกนรับ E-Stamp</span>
+          </LinkButton>
+        </section>
+      </section>
     </div>
   )
 }
