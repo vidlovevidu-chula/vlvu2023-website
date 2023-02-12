@@ -24,7 +24,7 @@ function WelcomeText() {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={easeInOut}
-      className="flex flex-col items-center justify-center h-screen gap-6 relative z-30 top-48"
+      className="flex flex-col items-center justify-center gap-6 absolute z-30 bottom-32 left-1/2 -translate-x-1/2 w-full"
     >
       <div>
         <h1 className="text-[2.7rem] text-center">Welcome!</h1>
@@ -55,7 +55,7 @@ const variants1 = {
   },
   visible: {
     opacity: 1,
-    y: "20vh",
+    y: "25vh",
     x: "-10%",
   },
   end: {},
@@ -68,7 +68,7 @@ const variants2 = {
   },
   visible: {
     opacity: 1,
-    y: "12vh",
+    y: "17vh",
     x: "62%",
   },
   end: {},
@@ -81,7 +81,7 @@ const variants3 = {
   },
   visible: {
     opacity: 1,
-    y: "38vh",
+    y: "43vh",
     x: "52%",
   },
   end: {},
@@ -90,7 +90,7 @@ const variants3 = {
 export default function Home() {
   return (
     <div className="bg-vlvu-pink-100 font-display min-h-screen w-full font-semibold overflow-hidden">
-      <main className="text-vlvu-pink-500 mx-auto max-w-lg relative">
+      <main className="text-vlvu-pink-500 mx-auto max-w-lg relative min-h-screen">
         <div>
           <FlyInBackground />
         </div>

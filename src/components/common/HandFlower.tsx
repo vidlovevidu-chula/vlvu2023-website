@@ -5,7 +5,7 @@ export function HandFlower() {
   return (
     <motion.div
       initial={{ opacity: 0 }}
-      animate={{ opacity: 1, y: "-5vh", x: "10%" }}
+      animate={{ opacity: 1, y: "5vh", x: "10%" }}
       exit={{ opacity: 0 }}
       transition={easeInOut}
     >
