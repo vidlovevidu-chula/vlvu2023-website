@@ -39,7 +39,7 @@ export function LinkButton({
   onMouseLeave,
   onClick,
 }: {
-  type: "primary" | "secondary"
+  type: "primary" | "secondary" | "white"
   children: ReactNode
   href: string
   className?: string
@@ -59,6 +59,7 @@ export function LinkButton({
           type === "primary" &&
             "bg-vlvu-pink-400 text-vlvu-pink-500 hover:bg-vlvu-pink-600 hover:text-white hover:{children=value}",
           type === "secondary" && "bg-vlvu-pink-500 text-white hover:bg-vlvu-pink-600",
+          type === "white" && "bg-white text-vlvu-pink-500 hover:text-vlvu-pink-500 hover:bg-gray-100",
           className
         )}
       >
