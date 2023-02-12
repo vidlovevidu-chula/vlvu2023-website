@@ -1,4 +1,4 @@
-import { getCurrentUserData, updateUser } from "@/lib/db"
+import { getCurrentUserData, staffDocExist, staffReadable, updateUser } from "@/lib/db"
 
 export enum RedeemError {
   UserNotFound,
@@ -52,4 +52,8 @@ export const redeemFortune: (userId: string) => Promise<null | RedeemError> = as
   await updateUser(userId, { PrizeRedeemed: true })
 
   return null
+}
+
+export const isStaff = async () => {
+  return await staffReadable()
 }
