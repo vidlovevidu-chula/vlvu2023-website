@@ -29,3 +29,17 @@ export const getCurrentUserData = async (uid: string): Promise<null | DocumentDa
     return null
   }
 }
+
+export const getStaffRef = (uid: string) => {
+  return doc(db, "staffs", uid)
+}
+
+export const staffReadable = async () => {
+  try {
+    const ref = getStaffRef("template")
+    await getDoc(ref)
+    return true
+  } catch {
+    return false
+  }
+}

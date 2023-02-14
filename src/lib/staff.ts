@@ -1,4 +1,4 @@
-import { getCurrentUserData, updateUser } from "@/lib/db"
+import { getCurrentUserData, staffReadable, updateUser } from "@/lib/db"
 
 export enum RedeemError {
   UserNotFound,
@@ -23,7 +23,7 @@ export const redeemPrize: (userId: string) => Promise<null | RedeemError> = asyn
   }
 
   // check if user is qualified for redeem (have all stamp)
-  if (user.prizeStamp) {
+  if (!user.prizeStamp) {
     return RedeemError.MissingStamp
   }
 
@@ -40,16 +40,20 @@ export const redeemFortune: (userId: string) => Promise<null | RedeemError> = as
   }
 
   // check if user already redeemed
-  if (user.PrizeRedeemed) {
+  if (user.fortuneRedeemed) {
     return RedeemError.AlreadyRedeem
   }
 
   // check if user is qualified for redeem (have all stamp)
-  if (user.PrizeStamp) {
+  if (!user.fortuneStamp) {
     return RedeemError.MissingStamp
   }
 
-  await updateUser(userId, { PrizeRedeemed: true })
+  await updateUser(userId, { fortuneRedeemed: true })
 
   return null
+}
+
+export const isStaff = async () => {
+  return await staffReadable()
 }

@@ -39,6 +39,10 @@ export const getUser: (credential: FirebaseUser) => Promise<null | User> = async
   return (await getCurrentUserData(credential.uid)) as User
 }
 
+export const getUserByID = async (uid: string): Promise<null | User> => {
+  return (await getCurrentUserData(uid)) as User
+}
+
 export const getUserDoc = (credential: FirebaseUser) => {
   return getUserRef(credential.uid)
 }

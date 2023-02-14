@@ -21,15 +21,18 @@ import {
   getUser,
   addPrizeStamp as dbAddPrizeStamp,
   addFortuneStamp as dbAddFortuneStamp,
+  getUserByID,
 } from "./user"
 import { onSnapshot } from "firebase/firestore"
 import { Loading } from "@/components/common/Loading"
+import { isStaff as dbIsStaff } from "./staff"
 
 const auth = getAuth(firebaseApp)
 
 export interface IAuthContext {
   credential: FirebaseUser | null
   user: User | null
+  isStaff: boolean
   createUser: (body: UserCreateBody) => Promise<void>
   addPurpose: (purpose: string) => Promise<void>
   addScore: (score: number) => Promise<void>
@@ -45,6 +48,7 @@ export interface IAuthContext {
   requireGame: (redirect: string) => void
   requireNotUser: (redirect: string) => void
   requireNotGame: (redirect: string) => void
+  getUserByUID: (uid: string) => Promise<User | null>
 }
 
 const AuthContext = React.createContext<IAuthContext | null>(null)
@@ -66,6 +70,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 function useProvideAuth() {
   const [credential, setCredential] = useState<FirebaseUser | null>(null)
   const [user, setUser] = useState<User | null>(null)
+  const [isStaff, setIsStaff] = useState<boolean>(false)
   const [loading, setLoading] = useState(true)
   const router = useRouter()
 
@@ -81,6 +86,10 @@ function useProvideAuth() {
       }
 
       setCredential(newCredential)
+
+      dbIsStaff().then((_isStaff) => {
+        setIsStaff(_isStaff)
+      })
 
       onSnapshot(getUserDoc(newCredential), (data) => {
         setUser(data.data() as User)
@@ -209,6 +218,16 @@ function useProvideAuth() {
     }
   }
 
+  const getUserByUID = async (uid: string) => {
+    const user = await getUserByID(uid)
+
+    if (!user) {
+      return null
+    } else {
+      return user
+    }
+  }
+
   return {
     user,
     credential,
@@ -227,5 +246,7 @@ function useProvideAuth() {
     requireNotCred,
     requireNotUser,
     requireNotGame,
+    getUserByUID,
+    isStaff,
   }
 }

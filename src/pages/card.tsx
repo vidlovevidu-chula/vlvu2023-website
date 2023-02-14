@@ -7,9 +7,10 @@ import { Button, LinkButton } from "@/components/common/Button"
 import { motion } from "framer-motion"
 
 import ChevRonLeftIcon from "@heroicons/react/24/solid/ChevronLeftIcon"
+import CheckCircleIcon from "@heroicons/react/24/solid/CheckCircleIcon"
 import DownloadIcon from "@heroicons/react/24/solid/ArrowDownTrayIcon"
 import SignOutIcon from "@heroicons/react/24/solid/ArrowLeftOnRectangleIcon"
-// import QRCodeIcon from "@heroicons/react/24/solid/QRCodeIcon"
+import MapIcon from "@heroicons/react/24/solid/MapIcon"
 
 export default function Card() {
   const auth = useAuth()
@@ -81,16 +82,25 @@ export default function Card() {
         </Button>
       </section>
 
-      {/* <section className="flex flex-col gap-2 max-w-xs w-full mt-4">
+      <section className="flex flex-col gap-2 max-w-xs w-full mt-4">
         <LinkButton
-          href="/game"
+          href="/estamp"
           type="secondary"
           className="shadow-md px-0 py-3 w-full flex gap-1 justify-center items-center"
         >
-          <QRCodeIcon className="w-5 h-5 text-white" />
-          <span>สแกน E-Stamp</span>
+          <MapIcon className="w-5 h-5 text-white" />
+          <span>E-Stamp</span>
         </LinkButton>
-      </section> */}
+
+        <LinkButton
+          href="https://docs.google.com/forms/d/e/1FAIpQLSe54R9IrfKY0p3xyKqdcAmnCE2bvzWG1heVe4R0z-4_8R22VA/viewform"
+          type="white"
+          className="shadow-md px-0 py-3 w-full flex gap-1 justify-center items-center"
+        >
+          <CheckCircleIcon className="w-5 h-5 text-vlvu-pink-500" />
+          <span>แบบประเมินความพึงพอใจ</span>
+        </LinkButton>
+      </section>
     </div>
   )
 }
