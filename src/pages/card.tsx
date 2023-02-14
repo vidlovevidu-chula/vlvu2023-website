@@ -7,6 +7,7 @@ import { Button, LinkButton } from "@/components/common/Button"
 import { motion } from "framer-motion"
 
 import ChevRonLeftIcon from "@heroicons/react/24/solid/ChevronLeftIcon"
+import CheckCircleIcon from "@heroicons/react/24/solid/CheckCircleIcon"
 import DownloadIcon from "@heroicons/react/24/solid/ArrowDownTrayIcon"
 import SignOutIcon from "@heroicons/react/24/solid/ArrowLeftOnRectangleIcon"
 import MapIcon from "@heroicons/react/24/solid/MapIcon"
@@ -89,6 +90,15 @@ export default function Card() {
         >
           <MapIcon className="w-5 h-5 text-white" />
           <span>E-Stamp</span>
+        </LinkButton>
+
+        <LinkButton
+          href="https://docs.google.com/forms/d/e/1FAIpQLSe54R9IrfKY0p3xyKqdcAmnCE2bvzWG1heVe4R0z-4_8R22VA/viewform"
+          type="white"
+          className="shadow-md px-0 py-3 w-full flex gap-1 justify-center items-center"
+        >
+          <CheckCircleIcon className="w-5 h-5 text-vlvu-pink-500" />
+          <span>แบบประเมินความพึงพอใจ</span>
         </LinkButton>
       </section>
     </div>

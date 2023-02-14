@@ -74,12 +74,6 @@ export default function Scan() {
 
   const [user, setUser] = useState<(User & { uid: string }) | null>(null)
 
-  useEffect(() => {
-    if (!auth?.isStaff) {
-      router.push("/")
-    }
-  }, [auth])
-
   const getData = async (data: string) => {
     try {
       // fetch data
