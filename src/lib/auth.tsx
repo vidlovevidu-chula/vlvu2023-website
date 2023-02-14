@@ -21,6 +21,7 @@ import {
   getUser,
   addPrizeStamp as dbAddPrizeStamp,
   addFortuneStamp as dbAddFortuneStamp,
+  getUserByID,
 } from "./user"
 import { onSnapshot } from "firebase/firestore"
 import { Loading } from "@/components/common/Loading"
@@ -47,6 +48,7 @@ export interface IAuthContext {
   requireGame: (redirect: string) => void
   requireNotUser: (redirect: string) => void
   requireNotGame: (redirect: string) => void
+  getUserByUID: (uid: string) => Promise<User | null>
 }
 
 const AuthContext = React.createContext<IAuthContext | null>(null)
@@ -216,6 +218,16 @@ function useProvideAuth() {
     }
   }
 
+  const getUserByUID = async (uid: string) => {
+    const user = await getUserByID(uid)
+
+    if (!user) {
+      return null
+    } else {
+      return user
+    }
+  }
+
   return {
     user,
     credential,
@@ -234,6 +246,7 @@ function useProvideAuth() {
     requireNotCred,
     requireNotUser,
     requireNotGame,
+    getUserByUID,
     isStaff,
   }
 }
