@@ -53,7 +53,7 @@ export default function EStampPage() {
 
         <section className="flex flex-col gap-2 max-w-xs w-full mt-4">
           <LinkButton
-            href="/estamp"
+            href="/estamp/scanner"
             type="secondary"
             className="shadow-md px-0 py-3 w-full flex gap-1 justify-center items-center"
           >
